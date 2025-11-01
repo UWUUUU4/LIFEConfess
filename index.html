@@ -44,11 +44,10 @@
 </head>
 <body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
 
-    <!-- "SEND MAIL" CONTAINER (Hidden by default) -->
+ 
     <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
         
         <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
-            <!-- CUTE HEADER (Now dynamic!) -->
             <div id="letterHeader" class="bg-pink-400 p-4">
                 <p id="headerText" class="text-white text-center font-bold text-lg tracking-wider">
                     tell me anything
@@ -72,35 +71,51 @@
         </div>
     </div>
 
-    <!-- "PROMO" PAGE CONTAINER (Shown by default) -->
+  
     <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
-        <div class="w-32 h-32 bg-pink-100 rounded-3xl mx-auto flex items-center justify-center shadow-inner mb-6">
-            <svg class="w-20 h-20 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-        </div>
+        
+     
+        <img src="econ.jpg" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
+        
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
         <h2 class="text-xl font-medium text-gray-700 mb-6">LIFE CONFESS APPLICATION</h2>
-        <p class="text-gray-500 mb-6">Get the app to receive your own anonymous messages!</p>
+        
         <div class="space-y-4">
-            <a href="YOUR_APP_STORE_LINK_HERE" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-black text-white transition duration-300 opacity-50 cursor-not-allowed">
-                Download on the App Store
-            </a>
-            <a href="YOUR_GOOGLE_DRIVE_APK_LINK_HERE" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300">
-                Download APK (Android)
+          
+            <a href="https://expo.dev/artifacts/eas/2emkNNNAo7NPw7axqG6Ve.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300">
+                Download LCA App (.apk)
             </a>
         </div>
-        <p class="text-gray-400 text-sm mt-8">If you have a user link, please open it directly to send a message.</p>
+        
+    
+        <div class="text-left mt-8">
+            <h3 class="font-bold text-lg text-gray-800">What is LCA?</h3>
+            <p class="text-gray-600 text-sm mt-2 mb-4">
+                LCA (Life Confess Application) is a fun way to get anonymous mail and clues from your friends. Get the app, generate your unique link, and share it anywhere!
+            </p>
+            
+            <h3 class="font-bold text-lg text-gray-800">Privacy & Safety</h3>
+            <p class="text-gray-600 text-sm mt-2">
+                Your privacy is our top priority. All messages are **truly anonymous**. We do not store any personal data from senders. The "clue" feature is optional and only shares what the sender *chooses* to share.
+            </p>
+        </div>
+        
+        <p class="text-gray-400 text-sm mt-8">
+            If you have a user link, please open it directly to send a message.
+        </p>
     </div>
 
     <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
         <p id="messageBoxText" class="font-medium text-center"></p>
     </div>
 
-    <!-- Firebase SDKs -->
+
+    
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
     <script>
-        // --- PASTE YOUR 'confessapp-e1aff' KEYS HERE ---
+   
         const firebaseConfig = {
           apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
           authDomain: "confessapp-e1aff.firebaseapp.com",
@@ -113,7 +128,7 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // --- AI QUESTION LIST (with TAGALOG!) ---
+       
         const aiQuestions = [
             "What's a secret you've never told anyone? 🤫", "Do you have a crush on me?",
             "What's your biggest 'what if' in life?", "What's the last lie you told?",
@@ -143,16 +158,14 @@
         const messageBox = document.getElementById('messageBox');
         const messageBoxText = document.getElementById('messageBoxText');
         
-        // --- NEW: Header elements ---
         const letterHeader = document.getElementById('letterHeader');
         const headerText = document.getElementById('headerText');
 
         if (userId) {
-            // WE HAVE A USER ID! SHOW THE MAIL FORM.
+          
             promoContainer.classList.add('hidden');
             sendMailContainer.classList.remove('hidden');
             
-            // --- NEW: Fetch custom link settings ---
             const linkRef = db.collection("publicLinks").doc(userId);
             linkRef.get().then((doc) => {
                 if (doc.exists) {
@@ -164,7 +177,6 @@
                         letterHeader.style.backgroundColor = data.linkHeaderColor;
                     }
                 } else {
-                    // Doc doesn't exist, use defaults
                     console.log("No custom link settings found, using defaults.");
                 }
             }).catch((error) => {
@@ -172,18 +184,18 @@
             });
             
         } else {
-            // NO USER ID. SHOW THE PROMO PAGE.
+         
             sendMailContainer.classList.add('hidden');
             promoContainer.classList.remove('hidden');
         }
 
-        aiButton.onclick = () => { /* ... (same as before) ... */
+        aiButton.onclick = () => {
             const randomQuestion = aiQuestions[Math.floor(Math.random() * aiQuestions.length)];
             messageText.value = randomQuestion;
             messageText.focus();
         };
 
-        sendButton.onclick = async () => { /* ... (same as before) ... */
+        sendButton.onclick = async () => {
             if (!userId) {
                 showMessage("ERROR: No user ID found in the link.", "error");
                 return;
@@ -219,7 +231,7 @@
             }
         };
 
-        function showMessage(text, type) { /* ... (same as before) ... */
+        function showMessage(text, type) {
             messageBoxText.innerText = text;
             if (type === "success") {
                 messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
