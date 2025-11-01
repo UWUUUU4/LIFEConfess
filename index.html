@@ -8,10 +8,23 @@
     <style>
         body { font-family: 'Inter', sans-serif; }
         .form-input {
-            background-color: #f8f7ff;
-            border-color: #e6e6e6;
+            background-color: #fff;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            line-height: 1.6;
+            font-size: 16px;
+            color: #4a4a4a;
         }
         .form-input:focus {
+            box-shadow: none;
+            outline: none;
+        }
+        .clue-input {
+             background-color: #f8f7ff;
+             border: 1px solid #e6e6e6;
+        }
+        .clue-input:focus {
             border-color: #ff77a9;
             box-shadow: 0 0 0 2px #ffb3c6;
             outline: none;
@@ -23,6 +36,24 @@
         .btn-primary:hover {
             background-color: #ff69b4;
         }
+        .btn-secondary {
+            background-color: #e6e6e6;
+            color: #4a4a4a;
+        }
+        .btn-secondary:hover {
+            background-color: #dcdcdc;
+        }
+        .watermark {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e6e6e6;
+            opacity: 0.5;
+            transform: rotate(-15deg);
+            pointer-events: none;
+        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,31 +61,64 @@
 </head>
 <body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
 
-    <div class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
+    <!-- THIS IS THE "SEND MAIL" CONTAINER (Hidden by default) -->
+    <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
         
-        <h1 class="text-3xl font-bold text-center text-pink-500 mb-4">
-            Send Anonymous Mail
-        </h1>
-        <p class="text-center text-gray-500 mb-6">
-            This message will be sent to the owner of this link.
-        </p>
-        
-        <!-- The Form -->
+        <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
+            <div class="bg-pink-400 p-4">
+                <p class="text-white text-center font-bold text-lg tracking-wider">
+                    tell me anything
+                </p>
+            </div>
+            
+            <div class="bg-white p-4 relative">
+                <textarea id="messageText" class="w-full h-40 form-input resize-none" placeholder="Write your message..."></textarea>
+                <div class="watermark">LCA</div>
+            </div>
+        </div>
+
         <div class="space-y-4">
-            <textarea id="messageText" class="w-full h-40 p-4 rounded-lg shadow-sm focus:ring-2 form-input" placeholder="Write your message..."></textarea>
+            <input id="clueText" type="text" class="w-full p-4 rounded-lg shadow-sm clue-input" placeholder="Add a Clue (Optional, can be revealed!)" />
             
-            <!-- NEW: Clue Field -->
-            <input id="clueText" type="text" class="w-full p-4 rounded-lg shadow-sm focus:ring-2 form-input" placeholder="Add a Clue (Optional, can be revealed!)" />
-            
+            <button id="aiButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-secondary transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28-2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                </svg>
+                Get AI Question
+            </button>
+
             <button id="sendButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-primary transition duration-300">
                 Send Mail
             </button>
         </div>
-
-        <div id="messageBox" class="hidden mt-4 p-4 rounded-lg">
-            <p id="messageBoxText" class="font-medium text-center"></p>
-        </div>
     </div>
+
+    <!-- THIS IS THE "PROMO" PAGE CONTAINER (Shown by default) -->
+    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+        <svg class="w-24 h-24 mx-auto text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
+        <h2 class="text-xl font-medium text-gray-700 mb-6">LIFE CONFESS APPLICATION</h2>
+        <p class="text-gray-500 mb-6">
+            Get the app to receive your own anonymous messages!
+        </p>
+        <div class="space-y-4">
+            <a href="#" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-black text-white transition duration-300">
+                Download on the App Store
+            </a>
+            <a href="#" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-700 text-white transition duration-300">
+                Get it on Google Play
+            </a>
+        </div>
+        <p class="text-gray-400 text-sm mt-8">
+            If you have a user link, please open it directly to send a message.
+        </p>
+    </div>
+
+    <!-- This message box is shared by both modes -->
+    <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
+        <p id="messageBoxText" class="font-medium text-center"></p>
+    </div>
+
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
@@ -74,15 +138,66 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
+        // --- NEW: AI QUESTION LIST (with TAGALOG!) ---
+        const aiQuestions = [
+            "What's a secret you've never told anyone? 🤫",
+            "Do you have a crush on me?",
+            "What's your biggest 'what if' in life?",
+            "What's the last lie you told?",
+            "What's a song that reminds you of me?",
+            "What's your most embarrassing moment?",
+            "If you could time travel, where would you go?",
+            "What's your honest opinion of me?",
+            "What's one thing you want to do before you die?",
+            "Do I even know you in real life? 👀",
+            "What's a rumor you've heard about me?",
+            "What's your biggest fear?",
+            "What do you think of my friends?",
+            "Send me your favorite emoji.",
+            "Tell me something I don't know about you.",
+            "Sino pinakacute sa batch natin?",
+            "May tinatago ka bang galit sakin? HAHA",
+            "Ano ang first impression mo sakin?",
+            "Kung bibigyan mo ako ng advice, ano yun?",
+            "Describe me in 3 words.",
+            "Ano ang pinakamalaking chismis na narinig mo lately? 😜",
+            "May gusto ka bang aminin?",
+            "Anong pinaka-corny na joke ang alam mo?",
+            "Saan mo gusto pumunta na tayong dalawa lang?",
+            "Rate my profile pic from 1-10."
+        ];
+
+        // --- NEW: SMART LINK LOGIC ---
         const urlParams = new URLSearchParams(window.location.search);
         const userId = urlParams.get('id');
 
+        const sendMailContainer = document.getElementById('sendMailContainer');
+        const promoContainer = document.getElementById('promoContainer');
         const sendButton = document.getElementById('sendButton');
+        const aiButton = document.getElementById('aiButton');
         const messageText = document.getElementById('messageText');
-        const clueText = document.getElementById('clueText'); // <-- NEW
+        const clueText = document.getElementById('clueText');
         const messageBox = document.getElementById('messageBox');
         const messageBoxText = document.getElementById('messageBoxText');
 
+        if (userId) {
+            // WE HAVE A USER ID! SHOW THE MAIL FORM.
+            promoContainer.classList.add('hidden');
+            sendMailContainer.classList.remove('hidden');
+        } else {
+            // NO USER ID. SHOW THE PROMO PAGE.
+            sendMailContainer.classList.add('hidden');
+            promoContainer.classList.remove('hidden');
+        }
+
+        // --- AI Button Click ---
+        aiButton.onclick = () => {
+            const randomQuestion = aiQuestions[Math.floor(Math.random() * aiQuestions.length)];
+            messageText.value = randomQuestion;
+            messageText.focus();
+        };
+
+        // --- Send Button Click (Only works if userId exists) ---
         sendButton.onclick = async () => {
             if (!userId) {
                 showMessage("ERROR: No user ID found in the link.", "error");
@@ -90,7 +205,7 @@
             }
 
             const text = messageText.value.trim();
-            const clue = clueText.value.trim(); // <-- NEW
+            const clue = clueText.value.trim();
             
             if (text === "") {
                 showMessage("You can't send an empty message.", "error");
@@ -103,15 +218,14 @@
             try {
                 const messagesRef = db.collection("users").doc(userId).collection("messages");
 
-                // --- NEW PAYLOAD ---
                 let payload = {
                     text: text,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                     read: false,
-                    hasClue: false // Default to false
+                    hasClue: false,
+                    fromAi: false 
                 };
 
-                // If they added a clue, update the payload
                 if (clue !== "") {
                     payload.hasClue = true;
                     payload.clueText = clue;
@@ -121,7 +235,7 @@
 
                 showMessage("Mail sent successfully!", "success");
                 messageText.value = "";
-                clueText.value = ""; // Clear both boxes
+                clueText.value = "";
 
             } catch (error) {
                 console.error("Error sending message: ", error);
@@ -135,11 +249,15 @@
         function showMessage(text, type) {
             messageBoxText.innerText = text;
             if (type === "success") {
-                messageBox.className = "mt-4 p-4 rounded-lg bg-green-100 text-green-800";
+                messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
             } else {
-                messageBox.className = "mt-4 p-4 rounded-lg bg-red-100 text-red-800";
+                messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
             }
             messageBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 3000); // Hide after 3 seconds
         }
     </script>
 </body>
