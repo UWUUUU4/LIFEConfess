@@ -151,6 +151,9 @@
         const letterHeader = document.getElementById('letterHeader');
         const headerText = document.getElementById('headerText');
 
+        let currentHeaderText = 'tell me anything';
+        let currentHeaderColor = '#ffb3c6';
+
         if (userId) {
             promoContainer.classList.add('hidden');
             sendMailContainer.classList.remove('hidden');
@@ -161,9 +164,11 @@
                     const data = doc.data();
                     if (data.linkHeaderText) {
                         headerText.innerText = data.linkHeaderText;
+                        currentHeaderText = data.linkHeaderText;
                     }
                     if (data.linkHeaderColor) {
                         letterHeader.style.backgroundColor = data.linkHeaderColor;
+                        currentHeaderColor = data.linkHeaderColor;
                     }
                 } else {
                     console.log("No custom link settings found, using defaults.");
@@ -199,8 +204,13 @@
             try {
                 const messagesRef = db.collection("users").doc(userId).collection("messages");
                 let payload = {
-                    text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    read: false, hasClue: false, fromAi: false 
+                    text: text,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    read: false,
+                    hasClue: false,
+                    fromAi: false,
+                    headerText: currentHeaderText,
+                    headerColor: currentHeaderColor
                 };
                 if (clue !== "") {
                     payload.hasClue = true;
