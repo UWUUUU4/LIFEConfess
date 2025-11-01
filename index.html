@@ -3,50 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Anonymous Mail</title>
-    <!-- Load Tailwind CSS -->
+    <title>Send Anonymous Mail to LCA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
+        .form-input {
+            background-color: #f8f7ff;
+            border-color: #e6e6e6;
+        }
+        .form-input:focus {
+            border-color: #ff77a9;
+            box-shadow: 0 0 0 2px #ffb3c6;
+            outline: none;
+        }
+        .btn-primary {
+            background-color: #ff77a9;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #ff69b4;
+        }
     </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+<body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
 
     <div class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full">
         
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">
+        <h1 class="text-3xl font-bold text-center text-pink-500 mb-4">
             Send Anonymous Mail
         </h1>
         <p class="text-center text-gray-500 mb-6">
-            Your message will be sent completely anonymously.
+            This message will be sent to the owner of this link.
         </p>
         
         <!-- The Form -->
         <div class="space-y-4">
-            <textarea id="messageText" class="w-full h-40 p-4 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Write your message..."></textarea>
+            <textarea id="messageText" class="w-full h-40 p-4 rounded-lg shadow-sm focus:ring-2 form-input" placeholder="Write your message..."></textarea>
             
-            <button id="sendButton" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
+            <!-- NEW: Clue Field -->
+            <input id="clueText" type="text" class="w-full p-4 rounded-lg shadow-sm focus:ring-2 form-input" placeholder="Add a Clue (Optional, can be revealed!)" />
+            
+            <button id="sendButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-primary transition duration-300">
                 Send Mail
             </button>
         </div>
 
-        <!-- This message box is hidden by default -->
         <div id="messageBox" class="hidden mt-4 p-4 rounded-lg">
             <p id="messageBoxText" class="font-medium text-center"></p>
         </div>
-
     </div>
 
-    <!-- Load Firebase SDKs -->
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
     <script>
-        // --- IMPORTANT: PASTE YOUR FIREBASE CONFIG HERE ---
-        // These are your 'confessapp-e1aff' keys
+        // --- PASTE YOUR 'confessapp-e1aff' KEYS HERE ---
         const firebaseConfig = {
           apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
           authDomain: "confessapp-e1aff.firebaseapp.com",
@@ -56,30 +71,27 @@
           appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // --- This is the magic part ---
-
-        // 1. Get the User ID from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('id'); // e.g., ?id=USER_ID_FROM_APP
+        const userId = urlParams.get('id');
 
-        // 2. Get the HTML elements
         const sendButton = document.getElementById('sendButton');
         const messageText = document.getElementById('messageText');
+        const clueText = document.getElementById('clueText'); // <-- NEW
         const messageBox = document.getElementById('messageBox');
         const messageBoxText = document.getElementById('messageBoxText');
 
-        // 3. Handle the "Send" button click
         sendButton.onclick = async () => {
             if (!userId) {
-                showMessage("ERROR: No user ID found in the link. This link is broken.", "error");
+                showMessage("ERROR: No user ID found in the link.", "error");
                 return;
             }
 
             const text = messageText.value.trim();
+            const clue = clueText.value.trim(); // <-- NEW
+            
             if (text === "") {
                 showMessage("You can't send an empty message.", "error");
                 return;
@@ -89,19 +101,27 @@
             sendButton.innerText = "Sending...";
 
             try {
-                // 4. Create a reference to the user's "messages" sub-collection
                 const messagesRef = db.collection("users").doc(userId).collection("messages");
 
-                // 5. Add the new message!
-                // This is allowed by our Firebase Rule (allow create: if true)
-                await messagesRef.add({
+                // --- NEW PAYLOAD ---
+                let payload = {
                     text: text,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    read: false // Default to unread
-                });
+                    read: false,
+                    hasClue: false // Default to false
+                };
+
+                // If they added a clue, update the payload
+                if (clue !== "") {
+                    payload.hasClue = true;
+                    payload.clueText = clue;
+                }
+
+                await messagesRef.add(payload);
 
                 showMessage("Mail sent successfully!", "success");
-                messageText.value = ""; // Clear the box
+                messageText.value = "";
+                clueText.value = ""; // Clear both boxes
 
             } catch (error) {
                 console.error("Error sending message: ", error);
@@ -112,7 +132,6 @@
             }
         };
 
-        // Helper function to show messages
         function showMessage(text, type) {
             messageBoxText.innerText = text;
             if (type === "success") {
@@ -122,7 +141,6 @@
             }
             messageBox.classList.remove('hidden');
         }
-
     </script>
 </body>
 </html>
