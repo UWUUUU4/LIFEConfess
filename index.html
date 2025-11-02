@@ -72,25 +72,54 @@
         }
 
         .theme-halloween {
-            background-color: #1a1a1a;
+            background-color: #2d1142; /* Spooky Dark Purple */
             font-family: 'Creepster', cursive;
+            background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .theme-halloween #sendMailContainer {
+            border: 2px solid #f38323;
+        }
+        .theme-halloween #sendMailContainer::before {
+            content: '👻';
+            position: absolute;
+            top: -20px;
+            left: -25px;
+            font-size: 3rem;
+            transform: rotate(-20deg);
+            opacity: 0.9;
+            z-index: -1;
         }
         .theme-halloween #letterHeader { background-color: #f38323; }
-        .theme-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 1px 1px 2px #000; }
+        .theme-halloween #headerText { 
+            font-size: 2rem; 
+            letter-spacing: 2px; 
+            text-shadow: 2px 2px 4px #000;
+        }
         .theme-halloween .form-input, .theme-halloween .clue-input { 
             font-family: 'Creepster', cursive;
-            background-color: #333;
+            background-color: #1a1a1a;
             color: #ffab73;
-            border-color: #555;
+            border: 1px solid #f38323;
+            font-size: 1.1rem;
         }
         .theme-halloween .clue-input:focus {
-            border-color: #f38323; box-shadow: 0 0 0 2px #ffab73;
+            border-color: #f38323; box-shadow: 0 0 0 3px #ffab73;
         }
-        .theme-halloween .btn-primary { background-color: #f38323; }
+        .theme-halloween .btn-primary { 
+            background-color: #f38323; 
+            text-shadow: 1px 1px 2px #000;
+            font-size: 1.2rem;
+        }
         .theme-halloween .btn-primary:hover { background-color: #d46f1a; }
-        .theme-halloween .btn-secondary { background-color: #555; color: #ddd; }
-        .theme-halloween .btn-secondary:hover { background-color: #777; }
-        .theme-halloween .watermark { color: #444; }
+        .theme-halloween .btn-secondary { 
+            background-color: #444; 
+            color: #ddd; 
+            text-shadow: 1px 1px 2px #000;
+            font-size: 1.2rem;
+        }
+        .theme-halloween .btn-secondary:hover { background-color: #666; }
+        .theme-halloween .watermark { color: #444; opacity: 0.2; }
 
         .theme-christmas {
             background-color: #f0f7f4;
