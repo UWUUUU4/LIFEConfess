@@ -18,44 +18,100 @@
     <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
 
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FFF7F9;
+            transition: background-color 0.3s ease;
+        }
+        
         .form-input {
             background-color: #fff; border: none; width: 100%;
             padding: 1rem; line-height: 1.6; font-size: 16px; color: #4a4a4a;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
         }
         .form-input:focus { box-shadow: none; outline: none; }
+        
         .clue-input {
              background-color: #f8f7ff; border: 1px solid #e6e6e6;
+             font-family: 'Inter', sans-serif;
+             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .clue-input:focus {
             border-color: #ff77a9; box-shadow: 0 0 0 2px #ffb3c6; outline: none;
         }
+        
         .btn-primary {
             background-color: #ff77a9;
             color: white;
+            transition: background-color 0.3s ease;
         }
-        .btn-primary:hover {
-            background-color: #ff69b4;
-        }
+        .btn-primary:hover { background-color: #ff69b4; }
+        
         .btn-secondary {
-            background-color: #e6e6e6;
-            color: #4a4a4a;
+            background-color: #e6e6e6; color: #4a4a4a;
+            transition: background-color 0.3s ease;
         }
-        .btn-secondary:hover {
-            background-color: #dcdcdc;
-        }
+        .btn-secondary:hover { background-color: #dcdcdc; }
+        
         .watermark {
             position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
             font-weight: bold; color: #e6e6e6; opacity: 0.5;
             transform: rotate(-15deg); pointer-events: none;
         }
+
+        .theme-halloween {
+            background-color: #1a1a1a;
+            font-family: 'Creepster', cursive;
+        }
+        .theme-halloween #letterHeader { background-color: #f38323; }
+        .theme-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 1px 1px 2px #000; }
+        .theme-halloween .form-input, .theme-halloween .clue-input { 
+            font-family: 'Creepster', cursive;
+            background-color: #333;
+            color: #ffab73;
+            border-color: #555;
+        }
+        .theme-halloween .clue-input:focus {
+            border-color: #f38323; box-shadow: 0 0 0 2px #ffab73;
+        }
+        .theme-halloween .btn-primary { background-color: #f38323; }
+        .theme-halloween .btn-primary:hover { background-color: #d46f1a; }
+        .theme-halloween .btn-secondary { background-color: #555; color: #ddd; }
+        .theme-halloween .btn-secondary:hover { background-color: #777; }
+        .theme-halloween .watermark { color: #444; }
+
+        .theme-christmas {
+            background-color: #f0f7f4;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+        .theme-christmas #letterHeader { background-color: #c41d34; }
+        .theme-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
+        .theme-christmas .form-input, .theme-christmas .clue-input {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.25rem;
+            background-color: #fff;
+            color: #2b2b2b;
+            border-color: #d4e9e2;
+        }
+        .theme-christmas .clue-input:focus {
+            border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0;
+        }
+        .theme-christmas .btn-primary { background-color: #0c8346; }
+        .theme-christmas .btn-primary:hover { background-color: #0a6b38; }
+        .theme-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
+        .theme-christmas .btn-secondary:hover { background-color: #dcdcdc; }
+        .theme-christmas .watermark { color: #d4e9e2; }
+
     </style>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-pink-50 flex items-center justify-center min-h-screen p-4">
+<body class="flex items-center justify-center min-h-screen p-4">
 
     <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
         
@@ -209,6 +265,7 @@
 
         let currentHeaderText = 'tell me anything';
         let currentHeaderColor = '#ffb3c6';
+        let currentTheme = 'default';
 
         if (userId) {
             promoContainer.classList.add('hidden');
@@ -225,6 +282,14 @@
                     if (data.linkHeaderColor) {
                         letterHeader.style.backgroundColor = data.linkHeaderColor;
                         currentHeaderColor = data.linkHeaderColor;
+                    }
+                    if (data.theme) {
+                        currentTheme = data.theme;
+                        if (data.theme === 'halloween') {
+                            document.body.classList.add('theme-halloween');
+                        } else if (data.theme === 'christmas') {
+                            document.body.classList.add('theme-christmas');
+                        }
                     }
                 } else {
                     console.log("No custom link settings found, using defaults.");
@@ -270,7 +335,8 @@
                     hasClue: false,
                     fromAi: false,
                     headerText: currentHeaderText,
-                    headerColor: currentHeaderColor
+                    headerColor: currentHeaderColor,
+                    theme: currentTheme
                 };
                 if (clue !== "") {
                     payload.hasClue = true;
