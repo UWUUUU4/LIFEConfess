@@ -28,6 +28,7 @@
             font-family: 'Inter', sans-serif; 
             background-color: #FFF7F9;
             transition: background-color 0.3s ease;
+            user-select: none;
         }
         
         #sendMailContainer, #checkReplyContainer {
@@ -152,15 +153,13 @@
             align-items: center;
             justify-content: center;
             box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            cursor: grab;
+            cursor: pointer;
             z-index: 999;
-        }
-        #chatFab:active {
-            cursor: grabbing;
-            transform: scale(1.1);
+            transition: all 0.3s ease;
         }
         #chatFab:hover {
             background-color: #ff69b4;
+            transform: scale(1.1);
         }
         #aiChatModal {
             position: fixed;
@@ -702,87 +701,10 @@
                 }, 3000);
             }
 
-            let isDragging = false;
-            let justDragged = false;
-            let offsetX, offsetY;
-
-            const onDown = (e) => {
-                isDragging = true;
-                justDragged = false;
-                chatFab.style.cursor = 'grabbing';
-                
-                const rect = chatFab.getBoundingClientRect();
-                const touch = e.touches ? e.touches[0] : e;
-
-                offsetX = touch.clientX - rect.left;
-                offsetY = touch.clientY - rect.top;
-            };
-
-            const onMove = (e) => {
-                if (!isDragging) return;
-                justDragged = true;
-                e.preventDefault();
-                
-                const touch = e.touches ? e.touches[0] : e;
-                
-                let newX = touch.clientX - offsetX;
-                let newY = touch.clientY - offsetY;
-
-                newX = Math.max(10, Math.min(newX, window.innerWidth - 70));
-                newY = Math.max(10, Math.min(newY, window.innerHeight - 70));
-
-                chatFab.style.left = `${newX}px`;
-                chatFab.style.top = `${newY}px`;
-                chatFab.style.bottom = 'auto';
-                chatFab.style.right = 'auto';
-
-                const modalY = newY - aiChatModal.offsetHeight - 20;
-                aiChatModal.style.left = `${newX - aiChatModal.offsetWidth + 60}px`;
-                aiChatModal.style.top = `${modalY}px`;
-                aiChatModal.style.bottom = 'auto';
-                aiChatModal.style.right = 'auto';
-            };
-
-            const onUp = () => {
-                isDragging = false;
-                chatFab.style.cursor = 'grab';
-                
-                setTimeout(() => {
-                    justDragged = false;
-                }, 100); 
-            };
-
-            chatFab.addEventListener('mousedown', onDown);
-            document.addEventListener('mousemove', onMove);
-            document.addEventListener('mouseup', onUp);
             
-            chatFab.addEventListener('touchstart', onDown, { passive: false });
-            document.addEventListener('touchmove', onMove, { passive: false });
-            document.addEventListener('touchend', onUp);
-
             chatFab.onclick = () => {
-                if (justDragged) {
-                    return;
-                }
                 aiChatModal.classList.toggle('hidden');
-                if (!aiChatModal.classList.contains('hidden')) {
-                    const rect = chatFab.getBoundingClientRect();
-                    const modalHeight = 500;
-                    const modalWidth = 350;
-
-                    let top = rect.top - modalHeight - 20;
-                    let left = rect.left - modalWidth + 60;
-
-                    top = Math.max(10, top);
-                    left = Math.max(10, Math.min(left, window.innerWidth - modalWidth - 10));
-
-                    aiChatModal.style.top = `${top}px`;
-                    aiChatModal.style.left = `${left}px`;
-                    aiChatModal.style.bottom = 'auto';
-                    aiChatModal.style.right = 'auto';
-                }
             };
-
             chatCloseButton.onclick = () => {
                 aiChatModal.classList.add('hidden');
             };
@@ -798,7 +720,7 @@
             - Is it safe?: "Yes! All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional."
 
             Rules for answering:
-            - If the user asks for the download link, DO NOT give the direct .apk link. INSTEAD, give them the main page link: "https'://uwuuuu4.github.io/LIFEConfess/" and tell them the download button is there.
+            - If the user asks for the download link, DO NOT give the direct .apk link. INSTEAD, give them the main page link: "https://uwuuuu4.github.io/LIFEConfess/" and tell them the download button is there.
             - If the user asks what the app is or how it works, use the info above.
             - If the user asks *any* other question (like "what is the weather", "who are you", "write me a poem", "how to hack"), you MUST respond with: "Sorry, I can only answer questions about the LCA app."
             - Keep your answers short and friendly.`;
