@@ -138,6 +138,116 @@
                 transform: translateX(-50%) translateY(-200px);
             }
         }
+
+        #chatFab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff77a9;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: grab;
+            z-index: 999;
+        }
+        #chatFab:active {
+            cursor: grabbing;
+            transform: scale(1.1);
+        }
+        #chatFab:hover {
+            background-color: #ff69b4;
+        }
+        #aiChatModal {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        #chatHeader {
+            background-color: #ff77a9;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #chatHeader h3 {
+            color: white;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        #chatWindow {
+            flex-grow: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            background-color: #fff7f9;
+        }
+        .chat-message {
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            max-width: 85%;
+            word-wrap: break-word;
+        }
+        .chat-bot {
+            background-color: #f0f0f0;
+            color: #4a4a4a;
+            align-self: flex-start;
+        }
+        .chat-user {
+            background-color: #ffb3c6;
+            color: #4a4a4a;
+            align-self: flex-end;
+        }
+        #chatInputContainer {
+            display: flex;
+            padding: 0.75rem;
+            border-top: 1px solid #e6e6e6;
+            background-color: white;
+        }
+        #chatInput {
+            flex-grow: 1;
+            border: 1px solid #e6e6e6;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            outline: none;
+        }
+        #chatInput:focus {
+            border-color: #ff77a9;
+            box-shadow: 0 0 0 2px #ffb3c6;
+        }
+        #chatSendButton {
+            background-color: #ff77a9;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #chatSendButton:hover {
+            background-color: #ff69b4;
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -265,6 +375,37 @@
         </div>
     </div>
 
+    <button id="chatFab">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zm-4 0H9v2h2V9z" clip-rule="evenodd" />
+        </svg>
+    </button>
+
+    <div id="aiChatModal" class="hidden">
+        <div id="chatHeader">
+            <h3>LCA Assistant</h3>
+            <button id="chatCloseButton">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <div id="chatWindow">
+            <div class="chat-message chat-bot">
+                Hi! I'm the LCA Assistant. You can ask me how this site works, or for the download link.
+            </div>
+        </div>
+        <div id="chatInputContainer">
+            <input type="text" id="chatInput" placeholder="Ask a question..." />
+            <button id="chatSendButton">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
@@ -317,6 +458,13 @@
             const adCloseButton = document.getElementById('adCloseButton');
             const showCheckReplyButton = document.getElementById('showCheckReplyButton');
             const showSendMailButton = document.getElementById('showSendMailButton');
+
+            const chatFab = document.getElementById('chatFab');
+            const aiChatModal = document.getElementById('aiChatModal');
+            const chatCloseButton = document.getElementById('chatCloseButton');
+            const chatWindow = document.getElementById('chatWindow');
+            const chatInput = document.getElementById('chatInput');
+            const chatSendButton = document.getElementById('chatSendButton');
 
             let currentHeaderText = 'tell me anything';
             let currentHeaderColor = '#ffb3c6';
@@ -381,18 +529,26 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        const errorData = await response.json();
+                        console.error("Gemini API Error Response:", errorData);
+                        throw new Error(`HTTP error! status: ${response.status} - ${errorData.error.message}`);
                     }
 
                     const result = await response.json();
+                    
+                    if (!result.candidates || !result.candidates[0].content || !result.candidates[0].content.parts) {
+                        console.error("Invalid response structure from Gemini:", result);
+                        throw new Error("Invalid response structure from AI.");
+                    }
+
                     const aiText = result.candidates[0].content.parts[0].text;
                     
                     messageText.value = aiText.trim();
                     messageText.focus();
 
                 } catch (error) {
-                    console.error("Gemini AI Error:", error);
-                    showMessage("Error getting AI question. Please try again.", "error");
+                    console.error("Gemini AI Error:", error.message);
+                    showMessage(`AI Error: ${error.message}. (Note: If this is a 403 error, check your API key restrictions in Google Cloud Console.)`, "error");
                    
                     messageText.value = "What's your honest opinion of me?";
                 } finally {
@@ -538,13 +694,186 @@
                 if (type === "success") {
                     messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
                 } else {
-                    messageBox.className = "fixed top-5 left-1.2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
+                    messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
                 }
                 messageBox.classList.remove('hidden');
                 setTimeout(() => {
                     messageBox.classList.add('hidden');
                 }, 3000);
             }
+
+            let isDragging = false;
+            let justDragged = false;
+            let offsetX, offsetY;
+
+            const onDown = (e) => {
+                isDragging = true;
+                justDragged = false;
+                chatFab.style.cursor = 'grabbing';
+                
+                const rect = chatFab.getBoundingClientRect();
+                const touch = e.touches ? e.touches[0] : e;
+
+                offsetX = touch.clientX - rect.left;
+                offsetY = touch.clientY - rect.top;
+            };
+
+            const onMove = (e) => {
+                if (!isDragging) return;
+                justDragged = true;
+                e.preventDefault();
+                
+                const touch = e.touches ? e.touches[0] : e;
+                
+                let newX = touch.clientX - offsetX;
+                let newY = touch.clientY - offsetY;
+
+                newX = Math.max(10, Math.min(newX, window.innerWidth - 70));
+                newY = Math.max(10, Math.min(newY, window.innerHeight - 70));
+
+                chatFab.style.left = `${newX}px`;
+                chatFab.style.top = `${newY}px`;
+                chatFab.style.bottom = 'auto';
+                chatFab.style.right = 'auto';
+
+                const modalY = newY - aiChatModal.offsetHeight - 20;
+                aiChatModal.style.left = `${newX - aiChatModal.offsetWidth + 60}px`;
+                aiChatModal.style.top = `${modalY}px`;
+                aiChatModal.style.bottom = 'auto';
+                aiChatModal.style.right = 'auto';
+            };
+
+            const onUp = () => {
+                isDragging = false;
+                chatFab.style.cursor = 'grab';
+                
+                setTimeout(() => {
+                    justDragged = false;
+                }, 100); 
+            };
+
+            chatFab.addEventListener('mousedown', onDown);
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+            
+            chatFab.addEventListener('touchstart', onDown, { passive: false });
+            document.addEventListener('touchmove', onMove, { passive: false });
+            document.addEventListener('touchend', onUp);
+
+            chatFab.onclick = () => {
+                if (justDragged) {
+                    return;
+                }
+                aiChatModal.classList.toggle('hidden');
+                if (!aiChatModal.classList.contains('hidden')) {
+                    const rect = chatFab.getBoundingClientRect();
+                    const modalHeight = 500;
+                    const modalWidth = 350;
+
+                    let top = rect.top - modalHeight - 20;
+                    let left = rect.left - modalWidth + 60;
+
+                    top = Math.max(10, top);
+                    left = Math.max(10, Math.min(left, window.innerWidth - modalWidth - 10));
+
+                    aiChatModal.style.top = `${top}px`;
+                    aiChatModal.style.left = `${left}px`;
+                    aiChatModal.style.bottom = 'auto';
+                    aiChatModal.style.right = 'auto';
+                }
+            };
+
+            chatCloseButton.onclick = () => {
+                aiChatModal.classList.add('hidden');
+            };
+
+            const systemPrompt = `You are LCA Assistant, a friendly and helpful bot for the 'LIFE CONFESS APPLICATION' (LCA). Your only job is to answer questions about the app.
+            
+            Here is all the information you are allowed to share:
+            - What is LCA?: "LCA is your personal, secret mailbox! Get the app, share your unique link, and let friends, classmates, or crushes send you anonymous messages. It's the most fun way to hear their real thoughts!"
+            - How does it work?: "You get the app, share your unique link, and your friends can send you anonymous messages. You can also send messages and check for replies from this website."
+            - How do I download the app?: "You can download the LCA app (.apk) for Android."
+            - App Download Link: "The download link is https://expo.dev/artifacts/eas/gZ7RHWxPYpSVxhTh41gV7B.apk"
+            - What are the features?: "Get secret messages with optional clues, customize your link page, get 'Nice Vibes' from an AI ghost, and see all your mail in a cute grid."
+            - Is it safe?: "Yes! All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional."
+
+            Rules for answering:
+            - If the user asks for the download link, provide it.
+            - If the user asks what the app is or how it works, use the info above.
+            - If the user asks *any* other question (like "what is the weather", "who are you", "write me a poem", "how to hack"), you MUST respond with: "Sorry, I can only answer questions about the LCA app."
+            - Keep your answers short and friendly.`;
+            
+            const chatHistory = [
+                { role: "user", parts: [{ text: systemPrompt }] },
+                { role: "model", parts: [{ text: "Hi! I'm the LCA Assistant. You can ask me how this site works, or for the download link." }] }
+            ];
+
+            const addMessageToChat = (text, type) => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = `chat-message ${type}`;
+                msgDiv.innerText = text;
+                chatWindow.appendChild(msgDiv);
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            };
+
+            const handleChatSend = async () => {
+                const userText = chatInput.value.trim();
+                if (userText === "") return;
+
+                addMessageToChat(userText, 'chat-user');
+                chatInput.value = "";
+                chatSendButton.disabled = true;
+                addMessageToChat("Thinking...", 'chat-bot');
+
+                chatHistory.push({ role: "user", parts: [{ text: userText }] });
+
+                const apiKey = "AIzaSyC2IDYSpD4JZ45NZWbKuIQRP6RNvdQSAxg";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: chatHistory,
+                            safetySettings: [
+                                { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_ONLY_HIGH" }
+                            ]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Chat AI Error Response:", errorData);
+                        throw new Error(`HTTP error! status: ${response.status} - ${errorData.error.message}`);
+                    }
+
+                    const result = await response.json();
+                    const aiText = result.candidates[0].content.parts[0].text;
+
+                    chatHistory.push({ role: "model", parts: [{ text: aiText }] });
+                    
+                    const thinkingBubble = chatWindow.querySelector(".chat-bot:last-child");
+                    thinkingBubble.innerText = aiText;
+
+                } catch (error) {
+                    console.error("Chat AI Error:", error.message);
+                    const thinkingBubble = chatWindow.querySelector(".chat-bot:last-child");
+                    thinkingBubble.innerText = `Sorry, an error occurred: ${error.message}. (Note: If this is a 403 error, check your API key restrictions in Google Cloud Console.)`;
+                } finally {
+                    chatSendButton.disabled = false;
+                }
+            };
+
+            chatSendButton.onclick = handleChatSend;
+            chatInput.onkeydown = (e) => {
+                if (e.key === 'Enter') {
+                    handleChatSend();
+                }
+            };
         });
     </script>
 </body>
