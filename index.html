@@ -139,114 +139,6 @@
                 transform: translateX(-50%) translateY(-200px);
             }
         }
-        
-        #chatFab {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #ff77a9;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            cursor: pointer;
-            z-index: 999;
-            transition: all 0.3s ease;
-        }
-        #chatFab:hover {
-            background-color: #ff69b4;
-            transform: scale(1.1);
-        }
-        #aiChatModal {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 350px;
-            height: 500px;
-            background-color: white;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-        #chatHeader {
-            background-color: #ff77a9;
-            padding: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        #chatHeader h3 {
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        #chatWindow {
-            flex-grow: 1;
-            padding: 1rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            background-color: #fff7f9;
-        }
-        .chat-message {
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            max-width: 85%;
-            word-wrap: break-word;
-        }
-        .chat-bot {
-            background-color: #f0f0f0;
-            color: #4a4a4a;
-            align-self: flex-start;
-        }
-        .chat-user {
-            background-color: #ffb3c6;
-            color: #4a4a4a;
-            align-self: flex-end;
-        }
-        #chatInputContainer {
-            display: flex;
-            padding: 0.75rem;
-            border-top: 1px solid #e6e6e6;
-            background-color: white;
-        }
-        #chatInput {
-            flex-grow: 1;
-            border: 1px solid #e6e6e6;
-            border-radius: 20px;
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            outline: none;
-        }
-        #chatInput:focus {
-            border-color: #ff77a9;
-            box-shadow: 0 0 0 2px #ffb3c6;
-        }
-        #chatSendButton {
-            background-color: #ff77a9;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        #chatSendButton:hover {
-            background-color: #ff69b4;
-        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -704,6 +596,22 @@
             
             chatFab.onclick = () => {
                 aiChatModal.classList.toggle('hidden');
+                if (!aiChatModal.classList.contains('hidden')) {
+                    const rect = chatFab.getBoundingClientRect();
+                    const modalHeight = 500;
+                    const modalWidth = 350;
+
+                    let top = rect.top - modalHeight - 20;
+                    let left = rect.left - modalWidth + 60;
+
+                    top = Math.max(10, top);
+                    left = Math.max(10, Math.min(left, window.innerWidth - modalWidth - 10));
+
+                    aiChatModal.style.top = `${top}px`;
+                    aiChatModal.style.left = `${left}px`;
+                    aiChatModal.style.bottom = 'auto';
+                    aiChatModal.style.right = 'auto';
+                }
             };
             chatCloseButton.onclick = () => {
                 aiChatModal.classList.add('hidden');
