@@ -101,6 +101,17 @@
         .theme-christmas #sendMailContainer, .theme-christmas #checkReplyContainer {
             border: 2px solid #0c8346;
         }
+        /* --- NEW: Christmas Emoji --- */
+        .theme-christmas #sendMailContainer::before {
+            content: '🎄';
+            position: absolute;
+            top: -20px;
+            right: -15px;
+            font-size: 3rem;
+            transform: rotate(15deg);
+            opacity: 0.9;
+            z-index: 10;
+        }
         .theme-christmas #letterHeader { background-color: #c41d34; }
         .theme-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
         .theme-christmas .form-input, .theme-christmas .clue-input {
@@ -140,22 +151,7 @@
             }
         }
 
-        .vibe-button {
-            transition: all 0.2s ease;
-            filter: grayscale(80%);
-            opacity: 0.6;
-        }
-        .vibe-button:hover {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        .selected-vibe {
-            filter: grayscale(0%);
-            opacity: 1;
-            transform: scale(1.1);
-            box-shadow: 0 0 0 3px #ff77a9;
-        }
+        /* --- REMOVED: Vibe Button Styles --- */
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -178,14 +174,7 @@
             <input id="clueText" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Add a Clue (Optional, can be revealed!)" />
             <input id="replyPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Create a secret password to check for a reply..." />
             
-            <div id="vibeSelector" class="flex justify-around items-center p-2 bg-gray-50 rounded-lg">
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="❤️">❤️</button>
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="😂">😂</button>
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="😮">😮</button>
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="😢">😢</button>
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="🔥">🔥</button>
-                <button class="vibe-button text-2xl p-2 rounded-full" data-vibe="🤫">🤫</button>
-            </div>
+            <!-- REMOVED: Vibe Selector Div -->
 
             <button id="aiButton" class="btn-secondary w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-300 flex items-center justify-center">
                 <svg id="aiButtonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
@@ -355,13 +344,11 @@
 
             const receiptMessage = document.getElementById('receiptMessage');
             const copyUserLinkButton = document.getElementById('copyUserLinkButton');
-            const vibeButtons = document.querySelectorAll('.vibe-button');
             
             let currentHeaderText = 'tell me anything';
             let currentHeaderColor = '#ffb3c6';
             let currentTheme = 'default';
-            let selectedVibe = null;
-
+            
             if (userId) {
                 promoContainer.classList.add('hidden');
                 checkReplyContainer.classList.add('hidden');
@@ -393,18 +380,6 @@
                 promoContainer.classList.remove('hidden');
             }
 
-            vibeButtons.forEach(button => {
-                button.onclick = () => {
-                    if (button.classList.contains('selected-vibe')) {
-                        button.classList.remove('selected-vibe');
-                        selectedVibe = null;
-                    } else {
-                        vibeButtons.forEach(btn => btn.classList.remove('selected-vibe'));
-                        button.classList.add('selected-vibe');
-                        selectedVibe = button.dataset.vibe;
-                    }
-                };
-            });
            
             aiButton.onclick = async () => {
                 aiButton.disabled = true;
@@ -498,9 +473,7 @@
                         payload.hasClue = true;
                         payload.clueText = clue;
                     }
-                    if (selectedVibe) {
-                        payload.vibe = selectedVibe;
-                    }
+                    
                     await messagesRef.add(payload);
                 
                     const emoji = document.createElement('span');
@@ -517,9 +490,7 @@
                     messageText.value = "";
                     clueText.value = "";
                     replyPassword.value = "";
-                    vibeButtons.forEach(btn => btn.classList.remove('selected-vibe'));
-                    selectedVibe = null;
-
+                    
                 } catch (error) {
                     console.error("Error sending message: ", error);
                     if (error.code === 'unauthenticated' || error.code === 'permission-denied') {
@@ -596,7 +567,7 @@
                 adModal.classList.add('hidden');
             };
             adDownloadButton.onclick = () => {
-                window.location.href = 'https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk';
+                window.location.href = 'https://expo.dev/artifacts/eas/gZ7RHWxPYpSVxhTh41gV7B.apk';
             };
 
             copyUserLinkButton.onclick = () => {
@@ -624,5 +595,4 @@
     </script>
 </body>
 </html>
-
 
