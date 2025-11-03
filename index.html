@@ -117,6 +117,28 @@
         .theme-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
         .theme-christmas .btn-secondary:hover { background-color: #dcdcdc; }
         .theme-christmas .watermark { color: #d4e9e2; }
+
+        /* --- NEW: Send Animation --- */
+        .send-animation {
+            position: absolute;
+            bottom: 70px; /* Start near the send button */
+            left: 50%;
+            font-size: 3rem;
+            animation: float-up 2s ease-out forwards;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-200px);
+            }
+        }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -131,7 +153,7 @@
             </div>
             
             <div class="bg-white p-4 relative">
-                <textarea id="messageText" class="w-full h-40 bg-white border-none resize-none p-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Write your message..."></textarea>
+                <textarea id="messageText" class="form-input w-full h-40 bg-white border-none resize-none p-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Write your message..."></textarea>
                 <div class="watermark">LCA</div>
             </div>
         </div>
@@ -140,8 +162,12 @@
             <input id="replyPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Create a secret password to check for a reply..." />
             
             <button id="aiButton" class="btn-secondary w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-300 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
-                Get AI Question
+                <svg id="aiButtonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+                <svg id="aiButtonLoading" class="hidden animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="aiButtonText">Get AI Question</span>
             </button>
             <button id="sendButton" class="btn-primary w-full font-bold py-3 px-4 rounded-lg shadow-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transition duration-300">
                 Send Mail
@@ -179,7 +205,7 @@
         <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
         
         <div class="space-y-4">
-            <a href="" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+            <a href="https://expo.dev/artifacts/eas/gZ7RHWxPYpSVxhTh41gV7B.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
                 Download LCA App (.apk)
             </a>
         </div>
@@ -259,21 +285,7 @@
             
             const db = firebase.firestore();
 
-            const aiQuestions = [
-                "What's a secret you've never told anyone? 🤫", "Do you have a crush on me?",
-                "What's your biggest 'what if' in life?", "What's the last lie you told?",
-                "What's a song that reminds you of me?", "What's your most embarrassing moment?",
-                "If you could time travel, where would you go?", "What's your honest opinion of me?",
-                "What's one thing you want to do before you die?", "Do I even know you in real life? 👀",
-                "What's a rumor you've heard about me?", "What's your biggest fear?",
-                "What do you think of my friends?", "Send me your favorite emoji.",
-                "Tell me something I don't know about you.", "Sino pinakacute sa batch natin?",
-                "May tinatago ka bang galit sakin? HAHA", "Ano ang first impression mo sakin?",
-                "Kung bibigyan mo ako ng advice, ano yun?", "Describe me in 3 words.",
-                "Ano ang pinakamalaking chismis na narinig mo lately? 😜", "May gusto ka bang aminin?",
-                "Anong pinaka-corny na joke ang alam mo?", "Saan mo gusto pumunta na tayong dalawa lang?",
-                "Rate my profile pic from 1-10."
-            ];
+        
 
             const urlParams = new URLSearchParams(window.location.search);
             const userId = urlParams.get('id');
@@ -284,6 +296,10 @@
             
             const sendButton = document.getElementById('sendButton');
             const aiButton = document.getElementById('aiButton');
+            const aiButtonText = document.getElementById('aiButtonText');
+            const aiButtonIcon = document.getElementById('aiButtonIcon');
+            const aiButtonLoading = document.getElementById('aiButtonLoading');
+
             const messageText = document.getElementById('messageText');
             const clueText = document.getElementById('clueText');
             const replyPassword = document.getElementById('replyPassword');
@@ -340,10 +356,54 @@
                 promoContainer.classList.remove('hidden');
             }
 
-            aiButton.onclick = () => {
-                const randomQuestion = aiQuestions[Math.floor(Math.random() * aiQuestions.length)];
-                messageText.value = randomQuestion;
-                messageText.focus();
+         
+            aiButton.onclick = async () => {
+                aiButton.disabled = true;
+                aiButtonText.innerText = "Generating...";
+                aiButtonIcon.classList.add('hidden');
+                aiButtonLoading.classList.remove('hidden');
+
+                const apiKey = ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                
+                const prompt = "Generate one, and only one, fun, flirty, or interesting anonymous question to ask a friend. It should be a single sentence. Do not include quotes. Examples: 'What's a secret you've never told anyone?', 'Do you have a crush on me?', 'Describe me in 3 words.'";
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            safetySettings: [
+                                { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_ONLY_HIGH" }
+                            ]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const aiText = result.candidates[0].content.parts[0].text;
+                    
+                    messageText.value = aiText.trim();
+                    messageText.focus();
+
+                } catch (error) {
+                    console.error("Gemini AI Error:", error);
+                    showMessage("Error getting AI question. Please try again.", "error");
+                 
+                    messageText.value = "What's your honest opinion of me?";
+                } finally {
+                    aiButton.disabled = false;
+                    aiButtonText.innerText = "Get AI Question";
+                    aiButtonIcon.classList.remove('hidden');
+                    aiButtonLoading.classList.add('hidden');
+                }
             };
 
             sendButton.onclick = async () => {
@@ -382,7 +442,16 @@
                         payload.clueText = clue;
                     }
                     await messagesRef.add(payload);
+               
+                    const emoji = document.createElement('span');
+                    emoji.innerHTML = '💌';
+                    emoji.className = 'send-animation';
+                    sendMailContainer.appendChild(emoji);
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 2000);
                     
+
                     adModal.classList.remove('hidden');
                     messageText.value = "";
                     clueText.value = "";
@@ -390,11 +459,10 @@
 
                 } catch (error) {
                     console.error("Error sending message: ", error);
-                    if (error.code === 'unauthenticated') {
+                    if (error.code === 'unauthenticated' || error.code === 'permission-denied') {
                         showMessage("Security check failed. Please refresh the page.", "error");
                     } else {
                         showMessage("An error occurred. Please try again.", "error");
-
                     }
                 } finally {
                     sendButton.disabled = false;
@@ -442,7 +510,7 @@
                     }
                 } catch (e) {
                     console.error("Error checking reply:", e);
-                    if (e.code === 'unauthenticated') {
+                    if (e.code === 'unauthenticated' || e.code === 'permission-denied') {
                         showMessage("Security check failed. Please refresh the page.", "error");
                     } else {
                         showMessage("An error occurred.", "error");
@@ -465,7 +533,7 @@
                 adModal.classList.add('hidden');
             };
             adDownloadButton.onclick = () => {
-                window.location.href = '';
+                window.location.href = 'https://expo.dev/artifacts/eas/gZ7RHWxPYpSVxhTh41gV7B.apk';
             };
 
             function showMessage(text, type) {
@@ -484,5 +552,4 @@
     </script>
 </body>
 </html>
-
 
