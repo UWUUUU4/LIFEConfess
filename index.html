@@ -118,10 +118,9 @@
         .theme-christmas .btn-secondary:hover { background-color: #dcdcdc; }
         .theme-christmas .watermark { color: #d4e9e2; }
 
-        /* --- NEW: Send Animation --- */
         .send-animation {
             position: absolute;
-            bottom: 70px; /* Start near the send button */
+            bottom: 70px;
             left: 50%;
             font-size: 3rem;
             animation: float-up 2s ease-out forwards;
@@ -285,8 +284,6 @@
             
             const db = firebase.firestore();
 
-        
-
             const urlParams = new URLSearchParams(window.location.search);
             const userId = urlParams.get('id');
 
@@ -356,14 +353,14 @@
                 promoContainer.classList.remove('hidden');
             }
 
-         
+           
             aiButton.onclick = async () => {
                 aiButton.disabled = true;
                 aiButtonText.innerText = "Generating...";
                 aiButtonIcon.classList.add('hidden');
                 aiButtonLoading.classList.remove('hidden');
 
-                const apiKey = ""; 
+                const apiKey = "AIzaSyC2IDYSpD4JZ45NZWbKuIQRP6RNvdQSAxg"; 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
                 
                 const prompt = "Generate one, and only one, fun, flirty, or interesting anonymous question to ask a friend. It should be a single sentence. Do not include quotes. Examples: 'What's a secret you've never told anyone?', 'Do you have a crush on me?', 'Describe me in 3 words.'";
@@ -396,7 +393,7 @@
                 } catch (error) {
                     console.error("Gemini AI Error:", error);
                     showMessage("Error getting AI question. Please try again.", "error");
-                 
+                   
                     messageText.value = "What's your honest opinion of me?";
                 } finally {
                     aiButton.disabled = false;
@@ -442,7 +439,7 @@
                         payload.clueText = clue;
                     }
                     await messagesRef.add(payload);
-               
+                
                     const emoji = document.createElement('span');
                     emoji.innerHTML = '💌';
                     emoji.className = 'send-animation';
@@ -541,7 +538,7 @@
                 if (type === "success") {
                     messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
                 } else {
-                    messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
+                    messageBox.className = "fixed top-5 left-1.2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
                 }
                 messageBox.classList.remove('hidden');
                 setTimeout(() => {
