@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Anonymous Mail to LCA</title>
+
     <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
     <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
     <meta property="og:type" content="website" />
@@ -15,10 +16,13 @@
     <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
     <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
     <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
+
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -242,7 +246,7 @@
         </div>
     </div>
 
-    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center hidden">
         <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
         <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
@@ -383,16 +387,9 @@
 
                 Promise.all([linkRef.get(), eventRef.get()])
                     .then(([linkDoc, eventDoc]) => {
-                        let userTheme = 'default';
-                        let userHeader = 'tell me anything';
-                        let userColor = '#ffb3c6';
-
-                        if (linkDoc.exists) {
-                            const data = linkDoc.data();
-                            userTheme = data.theme || 'default';
-                            userHeader = data.linkHeaderText || 'tell me anything';
-                            userColor = data.linkHeaderColor || '#ffb3c6';
-                        }
+                        let finalTheme = 'default';
+                        let finalHeaderText = 'tell me anything';
+                        let finalHeaderColor = '#ffb3c6';
 
                         let activeEvent = null;
                         if (eventDoc.exists()) {
@@ -403,34 +400,35 @@
                             else if (events.halloween) activeEvent = 'event_halloween';
                         }
 
-                        const finalTheme = activeEvent || userTheme;
+                        let userTheme = 'default';
+                        let userHeader = 'tell me anything';
+                        let userColor = '#ffb3c6';
+                        if (linkDoc.exists) {
+                            const data = linkDoc.data();
+                            userTheme = data.theme || 'default';
+                            userHeader = data.linkHeaderText || 'tell me anything';
+                            userColor = data.linkHeaderColor || '#ffb3c6';
+                        }
 
-                        if (finalTheme !== 'default') {
-                            if (activeEvent) {
-                                const eventDetails = {
-                                    event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
-                                    event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
-                                    event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
-                                    event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
-                                };
-                                currentHeaderText = eventDetails[activeEvent].text;
-                                currentHeaderColor = eventDetails[activeEvent].color;
-                            } else {
-                                const themeDetails = {
-                                    theme_ocean: { text: userHeader, color: userColor || '#0a4f70' },
-                                    theme_cherry: { text: userHeader, color: userColor || '#f78da7' },
-                                    theme_gamer: { text: userHeader, color: userColor || '#581c87' },
-                                    theme_gold: { text: userHeader, color: userColor || '#d4af37' },
-                                };
-                                currentHeaderText = themeDetails[finalTheme] ? themeDetails[finalTheme].text : userHeader;
-                                currentHeaderColor = themeDetails[finalTheme] ? themeDetails[finalTheme].color : userColor;
-                            }
+                        if (activeEvent) {
+                            finalTheme = activeEvent;
+                            const eventDetails = {
+                                event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
+                                event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
+                                event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
+                                event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
+                            };
+                            finalHeaderText = eventDetails[activeEvent].text;
+                            finalHeaderColor = eventDetails[activeEvent].color;
                         } else {
-                            currentHeaderText = userHeader;
-                            currentHeaderColor = userColor;
+                            finalTheme = userTheme;
+                            finalHeaderText = userHeader;
+                            finalHeaderColor = userColor;
                         }
                         
                         currentTheme = finalTheme;
+                        currentHeaderText = finalHeaderText;
+                        currentHeaderColor = finalHeaderColor;
 
                         headerText.innerText = currentHeaderText;
                         letterHeader.style.backgroundColor = currentHeaderColor;
