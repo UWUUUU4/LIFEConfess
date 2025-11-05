@@ -24,6 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 1. DEFAULT STYLES (Your original, working styles) --- */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #FFF7F9;
@@ -73,6 +74,8 @@
             0% { opacity: 1; transform: translateX(-50%) translateY(0); }
             100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
         }
+
+        /* --- 2. EVENT THEMES (4 Events) --- */
         .event-halloween {
             background-color: #2d1142;
             font-family: 'Creepster', cursive;
@@ -99,6 +102,7 @@
         .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
         .event-halloween .btn-secondary:hover { background-color: #666; }
         .event-halloween .watermark { color: #444; opacity: 0.2; }
+
         .event-christmas {
             background-color: #f0f7f4;
             font-family: 'Mountains of Christmas', cursive;
@@ -121,6 +125,7 @@
         .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
         .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
         .event-christmas .watermark { color: #d4e9e2; }
+
         .event-valentines { background-color: #fff1f2; }
         .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
         .event-valentines #sendMailContainer::before {
@@ -140,6 +145,7 @@
         .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
         .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
         .event-valentines .watermark { color: #fce7f3; }
+
         .event-newyear { background-color: #030712; }
         .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
         .event-newyear #sendMailContainer::before {
@@ -159,6 +165,8 @@
         .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
         .event-newyear .btn-secondary:hover { background-color: #4b5563; }
         .event-newyear .watermark { color: #374151; }
+
+        /* --- 3. PURCHASABLE THEMES (4 Themes) --- */
         .theme-ocean { background-color: #030e21; }
         .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
         .theme-ocean #letterHeader { background-color: #0a4f70; }
@@ -172,6 +180,7 @@
         .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
         .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
         .theme-ocean .watermark { color: #0a192f; }
+
         .theme-cherry { background-color: #fffafa; }
         .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
         .theme-cherry #letterHeader { background-color: #f78da7; }
@@ -186,6 +195,7 @@
         .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
         .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
         .theme-cherry .watermark { color: #fce6ec; }
+
         .theme-gamer { background-color: #000; }
         .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
         .theme-gamer #letterHeader { background-color: #581c87; }
@@ -202,6 +212,7 @@
         .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
         .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
         .theme-gamer .watermark { color: #1a1a1a; }
+
         .theme-gold { background-color: #0c0c0c; }
         .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
         .theme-gold #letterHeader { background-color: #d4af37; }
@@ -238,7 +249,6 @@
             <input id="replyPassword" type="text" class="w-full p-4 rounded-lg shadow-sm clue-input" placeholder="Create a secret password to check for a reply..." />
             
             <button id="aiButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-secondary transition duration-300 flex items-center justify-center">
-                <!-- FIXED: Replaced malformed SVG with a valid Heroicon (Sparkles) -->
                 <svg id="aiButtonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" clip-rule="evenodd" />
                 </svg>
@@ -276,7 +286,7 @@
         </div>
     </div>
 
-    <!-- 3. Promo Page Container (Your original HTML) -->
+    <!-- 3. Promo Page Container (Your original HTML, but set to hidden) -->
     <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center hidden">
         <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
@@ -326,7 +336,6 @@
         <p id="messageBoxText" class="font-medium text-center"></p>
     </div>
     
-    <!-- FIXED: Typo in class* attribute -->
     <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full text-center">
             <img src="econ.png" alt="LCA App Icon" class="w-24 h-24 rounded-2xl mx-auto shadow-lg mb-4 -mt-16 border-4 border-white" />
@@ -361,7 +370,6 @@
                 apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
                 authDomain: "confessapp-e1aff.firebaseapp.com",
                 projectId: "confessapp-e1aff",
-                // FIXED: Correct storage bucket URL
                 storageBucket: "confessapp-e1aff.appspot.com",
                 messagingSenderId: "1036012328977",
                 appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
@@ -438,7 +446,6 @@
                         let userTheme = 'default';
                         let userHeader = 'tell me anything';
                         let userColor = '#ffb3c6';
-                        // FIXED: Safety check for doc.exists and .data()
                         if (linkDoc.exists) {
                             const data = linkDoc.data() || {};
                             userTheme = data.theme || 'default';
@@ -447,7 +454,6 @@
                         }
 
                         let activeEvent = null;
-                        // FIXED: .exists is a property, not a function
                         if (eventDoc.exists) {
                             const events = eventDoc.data() || {};
                             if (events.valentines) activeEvent = 'event_valentines';
@@ -483,16 +489,14 @@
                             'theme-ocean', 'theme-cherry', 'theme-gamer', 'theme-gold'
                         );
                         if (currentTheme !== 'default') {
-                            // FIXED: Use .replaceAll() to be safe
                             document.body.classList.add(currentTheme.replaceAll('_', '-'));
                         }
 
                     })
                     .catch((error) => {
                         console.error("Error getting settings:", error);
-                        // FIXED: Fallback logic
-                        headerText.innerText = currentHeaderText;
-                        letterHeader.style.backgroundColor = currentHeaderColor;
+                        headerText.innerText = 'tell me anything';
+                        letterHeader.style.backgroundColor = '#ffb3c6';
                     });
                 
             } else {
@@ -571,7 +575,6 @@
                         emoji.remove();
                     }, 2000);
                     
-                    // FIXED: Improved receipt message
                     receiptMessage.innerText = `Remember your password to check for a reply: "${password}"`;
                     copyUserLinkButton.classList.remove('hidden'); 
                     adModal.classList.remove('hidden');
@@ -582,7 +585,6 @@
                     
                 } catch (error) {
                     console.error("Error sending message: ", error);
-                    // FIXED: Better error handling
                     if (error.code === 'permission-denied') {
                         showMessage("Error: This user's mailbox is not set up correctly.", "error");
                     } else {
@@ -620,7 +622,6 @@
                     const replyRef = db.collection("replies").doc(replyId);
                     const doc = await replyRef.get();
                     
-                    // FIXED: Safety check
                     if (doc.exists) {
                         const data = doc.data() || {};
                         if (data.toUserId === checkingUserId) {
@@ -635,7 +636,6 @@
                     }
                 } catch (e) {
                     console.error("Error checking reply:", e);
-                    // FIXED: Better error handling
                     if (e.code === 'permission-denied') {
                          showMessage("Error: Could not access replies. Check permissions.", "error");
                     } else {
@@ -659,11 +659,10 @@
                 adModal.classList.add('hidden');
             };
             adDownloadButton.onclick = () => {
-                window.location.href = 'https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk';
+                window.location.href = 'https://expo.dev/artifacts/eas/faxtjgig89ZmSvhfgZ2Kfx.apk';
             };
 
             copyUserLinkButton.onclick = () => {
-                // FIXED: Safety check for undefined userId
                 if (!userId) {
                     showMessage("Cannot copy link, user ID is missing.", "error");
                     return;
