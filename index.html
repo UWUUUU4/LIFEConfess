@@ -389,6 +389,8 @@
             let currentTheme = 'default';
             
             if (userId) {
+                sendMailContainer.classList.remove('hidden');
+                
                 const linkRef = db.collection("publicLinks").doc(userId);
                 const eventRef = db.collection("globalConfig").doc("events");
 
@@ -457,9 +459,6 @@
                     })
                     .catch((error) => {
                         console.error("Error getting settings:", error);
-                    })
-                    .finally(() => {
-                        sendMailContainer.classList.remove('hidden');
                     });
                 
             } else {
