@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Anonymous Mail to LCA</title>
 
+    <!-- (Meta tags are unchanged) -->
     <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
     <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
     <meta property="og:type" content="website" />
@@ -21,6 +22,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- (We're still loading the event fonts) -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
     
     <style>
@@ -41,123 +43,182 @@
             transform: rotate(-15deg); pointer-events: none;
         }
 
-        .theme-halloween {
+        /* --- Event Themes (Renamed) --- */
+        .event-halloween {
             background-color: #2d1142;
             font-family: 'Creepster', cursive;
             background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-        .theme-halloween #sendMailContainer, .theme-halloween #checkReplyContainer {
-            border: 2px solid #f38323;
-        }
-        .theme-halloween #sendMailContainer::before {
+        .event-halloween #sendMailContainer { border: 2px solid #f38323; }
+        .event-halloween #sendMailContainer::before {
             content: '👻';
-            position: absolute;
-            top: -20px;
-            left: -25px;
-            font-size: 3rem;
-            transform: rotate(-20deg);
-            opacity: 0.9;
-            z-index: 10;
+            position: absolute; top: -20px; left: -25px;
+            font-size: 3rem; transform: rotate(-20deg); opacity: 0.9; z-index: 10;
         }
-        .theme-halloween #letterHeader { background-color: #f38323; }
-        .theme-halloween #headerText { 
-            font-size: 2rem; 
-            letter-spacing: 2px; 
-            text-shadow: 2px 2px 4px #000;
-        }
-        .theme-halloween .form-input, .theme-halloween .clue-input { 
+        .event-halloween #letterHeader { background-color: #f38323; }
+        .event-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; }
+        .event-halloween .form-input, .event-halloween .clue-input { 
             font-family: 'Creepster', cursive;
-            background-color: #1a1a1a;
-            color: #ffab73;
-            border: 1px solid #f38323;
-            font-size: 1.1rem;
+            background-color: #1a1a1a; color: #ffab73;
+            border: 1px solid #f38323; font-size: 1.1rem;
         }
-        .theme-halloween .form-input::placeholder, .theme-halloween .clue-input::placeholder {
-            color: #b37a50;
-        }
-        .theme-halloween .clue-input:focus {
-            border-color: #f38323; box-shadow: 0 0 0 3px #ffab73;
-        }
-        .theme-halloween .btn-primary { 
-            background-color: #f38323; 
-            text-shadow: 1px 1px 2px #000;
-            font-size: 1.2rem;
-        }
-        .theme-halloween .btn-primary:hover { background-color: #d46f1a; }
-        .theme-halloween .btn-secondary { 
-            background-color: #444; 
-            color: #ddd; 
-            text-shadow: 1px 1px 2px #000;
-            font-size: 1.2rem;
-        }
-        .theme-halloween .btn-secondary:hover { background-color: #666; }
-        .theme-halloween .watermark { color: #444; opacity: 0.2; }
+        .event-halloween .form-input::placeholder, .event-halloween .clue-input::placeholder { color: #b37a50; }
+        .event-halloween .clue-input:focus { border-color: #f38323; box-shadow: 0 0 0 3px #ffab73; }
+        .event-halloween .btn-primary { background-color: #f38323; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-primary:hover { background-color: #d46f1a; }
+        .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-secondary:hover { background-color: #666; }
+        .event-halloween .watermark { color: #444; opacity: 0.2; }
 
-        .theme-christmas {
+        .event-christmas {
             background-color: #f0f7f4;
             font-family: 'Mountains of Christmas', cursive;
         }
-        .theme-christmas #sendMailContainer, .theme-christmas #checkReplyContainer {
-            border: 2px solid #0c8346;
-        }
-        /* --- NEW: Christmas Emoji --- */
-        .theme-christmas #sendMailContainer::before {
+        .event-christmas #sendMailContainer { border: 2px solid #0c8346; }
+        .event-christmas #sendMailContainer::before {
             content: '🎄';
-            position: absolute;
-            top: -20px;
-            right: -15px;
-            font-size: 3rem;
-            transform: rotate(15deg);
-            opacity: 0.9;
-            z-index: 10;
+            position: absolute; top: -20px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
         }
-        .theme-christmas #letterHeader { background-color: #c41d34; }
-        .theme-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
-        .theme-christmas .form-input, .theme-christmas .clue-input {
+        .event-christmas #letterHeader { background-color: #c41d34; }
+        .event-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
+        .event-christmas .form-input, .event-christmas .clue-input {
             font-family: 'Mountains of Christmas', cursive;
-            font-size: 1.25rem;
-            background-color: #fff;
-            color: #2b2b2b;
-            border-color: #d4e9e2;
+            font-size: 1.25rem; background-color: #fff; color: #2b2b2b; border-color: #d4e9e2;
         }
-        .theme-christmas .clue-input:focus {
-            border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0;
+        .event-christmas .clue-input:focus { border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0; }
+        .event-christmas .btn-primary { background-color: #0c8346; }
+        .event-christmas .btn-primary:hover { background-color: #0a6b38; }
+        .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
+        .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
+        .event-christmas .watermark { color: #d4e9e2; }
+
+        /* --- NEW: Event Valentines --- */
+        .event-valentines { background-color: #fff1f2; }
+        .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
+        .event-valentines #sendMailContainer::before {
+            content: '💘';
+            position: absolute; top: -20px; left: -20px;
+            font-size: 3rem; transform: rotate(-25deg); opacity: 0.9; z-index: 10;
         }
-        .theme-christmas .btn-primary { background-color: #0c8346; }
-        .theme-christmas .btn-primary:hover { background-color: #0a6b38; }
-        .theme-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
-        .theme-christmas .btn-secondary:hover { background-color: #dcdcdc; }
-        .theme-christmas .watermark { color: #d4e9e2; }
+        .event-valentines #letterHeader { background-color: #e11d48; }
+        .event-valentines #headerText { font-size: 2rem; font-family: 'serif'; font-style: italic; }
+        .event-valentines .form-input, .event-valentines .clue-input {
+            font-family: 'serif'; font-style: italic;
+            font-size: 1.1rem; background-color: #fff; color: #be123c; border-color: #fbcfe8;
+        }
+        .event-valentines .clue-input:focus { border-color: #e11d48; box-shadow: 0 0 0 2px #fbcfe8; }
+        .event-valentines .btn-primary { background-color: #e11d48; }
+        .event-valentines .btn-primary:hover { background-color: #be123c; }
+        .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
+        .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
+        .event-valentines .watermark { color: #fce7f3; }
+
+        /* --- NEW: Event New Year --- */
+        .event-newyear { background-color: #030712; } /* Gray 950 */
+        .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
+        .event-newyear #sendMailContainer::before {
+            content: '🎆';
+            position: absolute; top: -15px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
+        }
+        .event-newyear #letterHeader { background-color: #111827; } /* Gray 900 */
+        .event-newyear #headerText { font-size: 2rem; text-shadow: 1px 1px 10px #fff; }
+        .event-newyear .form-input, .event-newyear .clue-input {
+            font-family: 'serif'; font-weight: bold;
+            font-size: 1.1rem; background-color: #1f2937; color: #f1f5f9; border-color: #374151;
+        }
+        .event-newyear .clue-input:focus { border-color: #f1f5f9; box-shadow: 0 0 0 2px #4b5563; }
+        .event-newyear .btn-primary { background-color: #f1f5f9; color: #111827; }
+        .event-newyear .btn-primary:hover { background-color: #e5e7eb; }
+        .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
+        .event-newyear .btn-secondary:hover { background-color: #4b5563; }
+        .event-newyear .watermark { color: #374151; }
+
+        /* --- NEW: Theme Ocean Deep --- */
+        .theme-ocean { background-color: #030e21; }
+        .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
+        .theme-ocean #letterHeader { background-color: #0a4f70; }
+        .theme-ocean .form-input, .theme-ocean .clue-input {
+            font-family: 'monospace';
+            font-size: 1rem; background-color: #0a192f; color: #ccd6f6; border-color: #0a4f70;
+        }
+        .theme-ocean .clue-input:focus { border-color: #a1c4fd; box-shadow: 0 0 0 2px #0a192f; }
+        .theme-ocean .btn-primary { background-color: #a1c4fd; color: #0a192f; }
+        .theme-ocean .btn-primary:hover { background-color: #89acdd; }
+        .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
+        .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
+        .theme-ocean .watermark { color: #0a192f; }
+
+        /* --- NEW: Theme Cherry Blossom --- */
+        .theme-cherry { background-color: #fffafa; }
+        .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
+        .theme-cherry #letterHeader { background-color: #f78da7; }
+        .theme-cherry #headerText { font-family: 'serif'; }
+        .theme-cherry .form-input, .theme-cherry .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #fff0f5; color: #5c333f; border-color: #f7d8e2;
+        }
+        .theme-cherry .clue-input:focus { border-color: #f78da7; box-shadow: 0 0 0 2px #fce6ec; }
+        .theme-cherry .btn-primary { background-color: #f78da7; }
+        .theme-cherry .btn-primary:hover { background-color: #f57092; }
+        .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
+        .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
+        .theme-cherry .watermark { color: #fce6ec; }
+
+        /* --- NEW: Theme Gamer Night --- */
+        .theme-gamer { background-color: #000; }
+        .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
+        .theme-gamer #letterHeader { background-color: #581c87; }
+        .theme-gamer #headerText { text-shadow: 1px 1px 5px #00ff00; }
+        .theme-gamer .form-input, .theme-gamer .clue-input {
+            font-family: 'monospace'; font-size: 1rem;
+            background-color: #1a1a1a; color: #00ff00; border-color: #3a105c;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .theme-gamer .form-input::placeholder, .theme-gamer .clue-input::placeholder { color: #008000; }
+        .theme-gamer .clue-input:focus { border-color: #00ff00; box-shadow: 0 0 0 2px #581c87; }
+        .theme-gamer .btn-primary { background-color: #00ff00; color: #000; }
+        .theme-gamer .btn-primary:hover { background-color: #00cc00; }
+        .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
+        .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
+        .theme-gamer .watermark { color: #1a1a1a; }
+
+        /* --- NEW: Theme Gold Standard (Admin) --- */
+        .theme-gold { background-color: #0c0c0c; }
+        .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
+        .theme-gold #letterHeader { background-color: #d4af37; }
+        .theme-gold #headerText { color: #000; font-family: 'serif'; font-weight: bold; }
+        .theme-gold .form-input, .theme-gold .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #111111; color: #ffd700; border-color: #222;
+        }
+        .theme-gold .clue-input:focus { border-color: #d4af37; box-shadow: 0 0 0 2px #222; }
+        .theme-gold .btn-primary { background-color: #d4af37; color: #000; }
+        .theme-gold .btn-primary:hover { background-color: #b89b30; }
+        .theme-gold .btn-secondary { background-color: #222; color: #d4af37; }
+        .theme-gold .btn-secondary:hover { background-color: #333; }
+        .theme-gold .watermark { color: #222; }
+
 
         .send-animation {
-            position: absolute;
-            bottom: 70px;
-            left: 50%;
-            font-size: 3rem;
+            /* (Unchanged) */
+            position: absolute; bottom: 70px; left: 50%; font-size: 3rem;
             animation: float-up 2s ease-out forwards;
-            pointer-events: none;
-            z-index: 100;
+            pointer-events: none; z-index: 100;
         }
-
         @keyframes float-up {
-            0% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-200px);
-            }
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
         }
-
-        /* --- REMOVED: Vibe Button Styles --- */
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
+    <!-- (All HTML from here down is UNCHANGED except for the script tag) -->
+
     <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
-        
         <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
             <div id="letterHeader" class="bg-pink-400 p-4">
                 <p id="headerText" class="text-white text-center font-bold text-lg tracking-wider">
@@ -174,8 +235,6 @@
             <input id="clueText" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Add a Clue (Optional, can be revealed!)" />
             <input id="replyPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Create a secret password to check for a reply..." />
             
-            <!-- REMOVED: Vibe Selector Div -->
-
             <button id="aiButton" class="btn-secondary w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-300 flex items-center justify-center">
                 <svg id="aiButtonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
                 <svg id="aiButtonLoading" class="hidden animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -212,19 +271,16 @@
     </div>
 
     <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
-        
+        <!-- (Unchanged) -->
         <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
-        
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
         <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
         <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
-        
         <div class="space-y-4">
             <a href="https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
                 Download LCA App (.apk)
             </a>
         </div>
-        
         <div class="text-left mt-8">
             <h3 class="font-bold text-lg text-gray-800 mb-4">What's inside?</h3>
             <ul class="space-y-3 text-gray-600 mb-8">
@@ -245,18 +301,15 @@
                     <span>A cute, simple grid to see all your mail.</span>
                 </li>
             </ul>
-
             <h3 class="font-bold text-lg text-gray-800">What is LCA?</h3>
             <p class="text-gray-600 text-sm mt-2 mb-4">
                 LCA is your personal, secret mailbox! Get the app, share your unique link, and let friends, classmates, or crushes send you anonymous messages. It's the most fun way to hear their real thoughts!
             </p>
-            
             <h3 class="font-bold text-lg text-gray-800">Privacy & Safety</h3>
             <p class="text-gray-600 text-sm mt-2">
                 We've got your back. All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional—senders only share what *they* want to.
             </p>
         </div>
-        
         <p class="text-gray-400 text-sm mt-8">
             If you have a user link, please open it directly to send a message.
         </p>
@@ -267,6 +320,7 @@
     </div>
     
     <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <!-- (Unchanged) -->
         <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full text-center">
             <img src="econ.png" alt="LCA App Icon" class="w-24 h-24 rounded-2xl mx-auto shadow-lg mb-4 -mt-16 border-4 border-white" />
             <h3 class="text-2xl font-bold text-pink-500 mb-2">Message Sent! 💌</h3>
@@ -293,15 +347,16 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
+    <!-- ********** THIS SCRIPT IS HEAVILY UPDATED ********** -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const firebaseConfig = {
-              apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
-              authDomain: "confessapp-e1aff.firebaseapp.com",
-              projectId: "confessapp-e1aff",
-              storageBucket: "confessapp-e1aff.firebasestorage.app",
-              messagingSenderId: "1036012328977",
-              appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
+                apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
+                authDomain: "confessapp-e1aff.firebaseapp.com",
+                projectId: "confessapp-e1aff",
+                storageBucket: "confessapp-e1aff.firebasestorage.app",
+                messagingSenderId: "1036012328977",
+                appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
             };
 
             firebase.initializeApp(firebaseConfig);
@@ -354,25 +409,82 @@
                 checkReplyContainer.classList.add('hidden');
                 sendMailContainer.classList.remove('hidden');
                 
+                // --- NEW: Load user settings AND global events ---
                 const linkRef = db.collection("publicLinks").doc(userId);
-                linkRef.get().then((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
-                        if (data.linkHeaderText) {
-                            headerText.innerText = data.linkHeaderText;
-                            currentHeaderText = data.linkHeaderText;
+                const eventRef = db.collection("globalConfig").doc("events");
+
+                Promise.all([linkRef.get(), eventRef.get()])
+                    .then(([linkDoc, eventDoc]) => {
+                        let userTheme = 'default';
+                        let userHeader = 'tell me anything';
+                        let userColor = '#ffb3c6';
+
+                        // 1. Get the user's saved settings
+                        if (linkDoc.exists) {
+                            const data = linkDoc.data();
+                            userTheme = data.theme || 'default';
+                            userHeader = data.linkHeaderText || 'tell me anything';
+                            userColor = data.linkHeaderColor || '#ffb3c6';
                         }
-                        if (data.linkHeaderColor) {
-                            letterHeader.style.backgroundColor = data.linkHeaderColor;
-                            currentHeaderColor = data.linkHeaderColor;
+
+                        // 2. Get global event status
+                        let activeEvent = null;
+                        if (eventDoc.exists) {
+                            const events = eventDoc.data();
+                            // Check in priority order
+                            if (events.valentines) activeEvent = 'event_valentines';
+                            else if (events.newyear) activeEvent = 'event_newyear';
+                            else if (events.christmas) activeEvent = 'event_christmas';
+                            else if (events.halloween) activeEvent = 'event_halloween';
                         }
-                        if (data.theme) {
-                            currentTheme = data.theme;
-                            if (data.theme === 'halloween') document.body.classList.add('theme-halloween');
-                            else if (data.theme === 'christmas') document.body.classList.add('theme-christmas');
+
+                        // 3. Decide the FINAL theme
+                        // If an event is active, it OVERRIDES the user's theme
+                        const finalTheme = activeEvent || userTheme;
+
+                        // 4. Apply the settings
+                        if (finalTheme !== 'default') {
+                            // If it's an event, we need to get the event's header text/color
+                            if (activeEvent) {
+                                // (We have to hardcode event details here)
+                                const eventDetails = {
+                                    event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
+                                    event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
+                                    event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
+                                    event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
+                                };
+                                currentHeaderText = eventDetails[activeEvent].text;
+                                currentHeaderColor = eventDetails[activeEvent].color;
+                            } else {
+                                // It's a user's custom theme, use their saved settings
+                                currentHeaderText = userHeader;
+                                currentHeaderColor = userColor;
+                            }
+                        } else {
+                            // It's the default theme
+                            currentHeaderText = userHeader;
+                            currentHeaderColor = userColor;
                         }
-                    } else { console.log("No custom link settings found."); }
-                }).catch((error) => { console.error("Error getting link settings:", error); });
+                        
+                        currentTheme = finalTheme;
+
+                        // 5. Update the DOM
+                        headerText.innerText = currentHeaderText;
+                        letterHeader.style.backgroundColor = currentHeaderColor;
+                        
+                        // --- NEW: Apply correct theme class ---
+                        document.body.classList.remove('theme-halloween', 'theme-christmas'); // Clear old
+                        if (currentTheme.startsWith('theme_')) {
+                            document.body.classList.add(currentTheme.replace('_', '-'));
+                        } else if (currentTheme.startsWith('event_')) {
+                            document.body.classList.add(currentTheme.replace('_', '-'));
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.error("Error getting settings:", error);
+                        // Page will just use default pink theme
+                    });
                 
             } else {
                 sendMailContainer.classList.add('hidden');
@@ -380,7 +492,7 @@
                 promoContainer.classList.remove('hidden');
             }
 
-           
+            
             aiButton.onclick = async () => {
                 aiButton.disabled = true;
                 aiButtonText.innerText = "Generating...";
@@ -428,7 +540,7 @@
                 } catch (error) {
                     console.error("Gemini AI Error:", error.message);
                     showMessage(`AI Error: ${error.message}. (Note: If this is a 403 error, check your API key restrictions in Google Cloud Console.)`, "error");
-                   
+                    
                     messageText.value = "What's your honest opinion of me?";
                 } finally {
                     aiButton.disabled = false;
@@ -567,7 +679,7 @@
                 adModal.classList.add('hidden');
             };
             adDownloadButton.onclick = () => {
-                window.location.href = 'https://expo.dev/artifacts/eas/gZ7RHWxPYpSVxhTh41gV7B.apk';
+                window.location.href = 'https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk'; // <-- OLD APK LINK
             };
 
             copyUserLinkButton.onclick = () => {
@@ -584,6 +696,667 @@
                 if (type === "success") {
                     messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
                 } else {
+                    messageBox.className = "fixed top-5 left-1/This is the final and most important step to make your new themes work for the public.
+
+We're going to update your `index.html` file to do two new things:
+1.  Add all the new CSS for your 4 purchasable themes and 4 event themes.
+2.  Add new JavaScript to check if you (the Admin) have an event active. If you do, it will **force everyone's link** to show that event theme (e.g., make everyone's page show the Halloween theme during October).
+
+Here is the **complete, new code for your `index.html` file**. Please replace your entire file with this.
+
+**Filename:** `index.html`
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Anonymous Mail to LCA</title>
+
+    <!-- (Meta tags are unchanged) -->
+    <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
+    <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="[https://uwuuuu4.github.io/LIFEConfess/](https://uwuuuu4.github.io/LIFEConfess/)" />
+    <meta property="og:image" content="[https://uwuuuu4.github.io/LIFEConfess/econ.png](https://uwuuuu4.github.io/LIFEConfess/econ.png)" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
+    <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
+    <meta name="twitter:image" content="[https://uwuuuu4.github.io/LIFEConfess/econ.png](https://uwuuuu4.github.io/LIFEConfess/econ.png)" />
+
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    
+    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <!-- (We're still loading the event fonts) -->
+    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap)" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FFF7F9;
+            transition: background-color 0.3s ease;
+            user-select: none;
+        }
+        
+        #sendMailContainer, #checkReplyContainer {
+            position: relative;
+        }
+        
+        .watermark {
+            position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
+            font-weight: bold; color: #e6e6e6; opacity: 0.5;
+            transform: rotate(-15deg); pointer-events: none;
+        }
+
+        /* --- Event Themes (Renamed) --- */
+        .event-halloween {
+            background-color: #2d1142;
+            font-family: 'Creepster', cursive;
+            background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .event-halloween #sendMailContainer { border: 2px solid #f38323; }
+        .event-halloween #sendMailContainer::before {
+            content: '👻';
+            position: absolute; top: -20px; left: -25px;
+            font-size: 3rem; transform: rotate(-20deg); opacity: 0.9; z-index: 10;
+        }
+        .event-halloween #letterHeader { background-color: #f38323; }
+        .event-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; }
+        .event-halloween .form-input, .event-halloween .clue-input { 
+            font-family: 'Creepster', cursive;
+            background-color: #1a1a1a; color: #ffab73;
+            border: 1px solid #f38323; font-size: 1.1rem;
+        }
+        .event-halloween .form-input::placeholder, .event-halloween .clue-input::placeholder { color: #b37a50; }
+        .event-halloween .clue-input:focus { border-color: #f38323; box-shadow: 0 0 0 3px #ffab73; }
+        .event-halloween .btn-primary { background-color: #f38323; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-primary:hover { background-color: #d46f1a; }
+        .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-secondary:hover { background-color: #666; }
+        .event-halloween .watermark { color: #444; opacity: 0.2; }
+
+        .event-christmas {
+            background-color: #f0f7f4;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+        .event-christmas #sendMailContainer { border: 2px solid #0c8346; }
+        .event-christmas #sendMailContainer::before {
+            content: '🎄';
+            position: absolute; top: -20px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
+        }
+        .event-christmas #letterHeader { background-color: #c41d34; }
+        .event-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
+        .event-christmas .form-input, .event-christmas .clue-input {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.25rem; background-color: #fff; color: #2b2b2b; border-color: #d4e9e2;
+        }
+        .event-christmas .clue-input:focus { border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0; }
+        .event-christmas .btn-primary { background-color: #0c8346; }
+        .event-christmas .btn-primary:hover { background-color: #0a6b38; }
+        .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
+        .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
+        .event-christmas .watermark { color: #d4e9e2; }
+
+        /* --- NEW: Event Valentines --- */
+        .event-valentines { background-color: #fff1f2; }
+        .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
+        .event-valentines #sendMailContainer::before {
+            content: '💘';
+            position: absolute; top: -20px; left: -20px;
+            font-size: 3rem; transform: rotate(-25deg); opacity: 0.9; z-index: 10;
+        }
+        .event-valentines #letterHeader { background-color: #e11d48; }
+        .event-valentines #headerText { font-size: 2rem; font-family: 'serif'; font-style: italic; }
+        .event-valentines .form-input, .event-valentines .clue-input {
+            font-family: 'serif'; font-style: italic;
+            font-size: 1.1rem; background-color: #fff; color: #be123c; border-color: #fbcfe8;
+        }
+        .event-valentines .clue-input:focus { border-color: #e11d48; box-shadow: 0 0 0 2px #fbcfe8; }
+        .event-valentines .btn-primary { background-color: #e11d48; }
+        .event-valentines .btn-primary:hover { background-color: #be123c; }
+        .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
+        .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
+        .event-valentines .watermark { color: #fce7f3; }
+
+        /* --- NEW: Event New Year --- */
+        .event-newyear { background-color: #030712; } /* Gray 950 */
+        .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
+        .event-newyear #sendMailContainer::before {
+            content: '🎆';
+            position: absolute; top: -15px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
+        }
+        .event-newyear #letterHeader { background-color: #111827; } /* Gray 900 */
+        .event-newyear #headerText { font-size: 2rem; text-shadow: 1px 1px 10px #fff; }
+        .event-newyear .form-input, .event-newyear .clue-input {
+            font-family: 'serif'; font-weight: bold;
+            font-size: 1.1rem; background-color: #1f2937; color: #f1f5f9; border-color: #374151;
+        }
+        .event-newyear .clue-input:focus { border-color: #f1f5f9; box-shadow: 0 0 0 2px #4b5563; }
+        .event-newyear .btn-primary { background-color: #f1f5f9; color: #111827; }
+        .event-newyear .btn-primary:hover { background-color: #e5e7eb; }
+        .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
+        .event-newyear .btn-secondary:hover { background-color: #4b5563; }
+        .event-newyear .watermark { color: #374151; }
+
+        /* --- NEW: Theme Ocean Deep --- */
+        .theme-ocean { background-color: #030e21; }
+        .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
+        .theme-ocean #letterHeader { background-color: #0a4f70; }
+        .theme-ocean .form-input, .theme-ocean .clue-input {
+            font-family: 'monospace';
+            font-size: 1rem; background-color: #0a192f; color: #ccd6f6; border-color: #0a4f70;
+        }
+        .theme-ocean .clue-input:focus { border-color: #a1c4fd; box-shadow: 0 0 0 2px #0a192f; }
+        .theme-ocean .btn-primary { background-color: #a1c4fd; color: #0a192f; }
+        .theme-ocean .btn-primary:hover { background-color: #89acdd; }
+        .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
+        .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
+        .theme-ocean .watermark { color: #0a192f; }
+
+        /* --- NEW: Theme Cherry Blossom --- */
+        .theme-cherry { background-color: #fffafa; }
+        .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
+        .theme-cherry #letterHeader { background-color: #f78da7; }
+        .theme-cherry #headerText { font-family: 'serif'; }
+        .theme-cherry .form-input, .theme-cherry .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #fff0f5; color: #5c333f; border-color: #f7d8e2;
+        }
+        .theme-cherry .clue-input:focus { border-color: #f78da7; box-shadow: 0 0 0 2px #fce6ec; }
+        .theme-cherry .btn-primary { background-color: #f78da7; }
+        .theme-cherry .btn-primary:hover { background-color: #f57092; }
+        .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
+        .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
+        .theme-cherry .watermark { color: #fce6ec; }
+
+        /* --- NEW: Theme Gamer Night --- */
+        .theme-gamer { background-color: #000; }
+        .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
+        .theme-gamer #letterHeader { background-color: #581c87; }
+        .theme-gamer #headerText { text-shadow: 1px 1px 5px #00ff00; }
+        .theme-gamer .form-input, .theme-gamer .clue-input {
+            font-family: 'monospace'; font-size: 1rem;
+            background-color: #1a1a1a; color: #00ff00; border-color: #3a105c;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .theme-gamer .form-input::placeholder, .theme-gamer .clue-input::placeholder { color: #008000; }
+        .theme-gamer .clue-input:focus { border-color: #00ff00; box-shadow: 0 0 0 2px #581c87; }
+        .theme-gamer .btn-primary { background-color: #00ff00; color: #000; }
+        .theme-gamer .btn-primary:hover { background-color: #00cc00; }
+        .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
+        .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
+        .theme-gamer .watermark { color: #1a1a1a; }
+
+        /* --- NEW: Theme Gold Standard (Admin) --- */
+        .theme-gold { background-color: #0c0c0c; }
+        .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
+        .theme-gold #letterHeader { background-color: #d4af37; }
+        .theme-gold #headerText { color: #000; font-family: 'serif'; font-weight: bold; }
+        .theme-gold .form-input, .theme-gold .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #111111; color: #ffd700; border-color: #222;
+        }
+        .theme-gold .clue-input:focus { border-color: #d4af37; box-shadow: 0 0 0 2px #222; }
+        .theme-gold .btn-primary { background-color: #d4af37; color: #000; }
+        .theme-gold .btn-primary:hover { background-color: #b89b30; }
+        .theme-gold .btn-secondary { background-color: #222; color: #d4af37; }
+        .theme-gold .btn-secondary:hover { background-color: #333; }
+        .theme-gold .watermark { color: #222; }
+
+
+        .send-animation {
+            /* (Unchanged) */
+            position: absolute; bottom: 70px; left: 50%; font-size: 3rem;
+            animation: float-up 2s ease-out forwards;
+            pointer-events: none; z-index: 100;
+        }
+        @keyframes float-up {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <!-- (All HTML from here down is UNCHANGED except for the script tag) -->
+
+    <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
+        <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
+            <div id="letterHeader" class="bg-pink-400 p-4">
+                <p id="headerText" class="text-white text-center font-bold text-lg tracking-wider">
+                    tell me anything
+                </p>
+            </div>
+            
+            <div class="bg-white p-4 relative">
+                <textarea id="messageText" class="form-input w-full h-40 bg-white border-none resize-none p-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Write your message..."></textarea>
+                <div class="watermark">LCA</div>
+            </div>
+        </div>
+        <div class="space-y-4">
+            <input id="clueText" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Add a Clue (Optional, can be revealed!)" />
+            <input id="replyPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Create a secret password to check for a reply..." />
+            
+            <button id="aiButton" class="btn-secondary w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-300 flex items-center justify-center">
+                <svg id="aiButtonIcon" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+                <svg id="aiButtonLoading" class="hidden animate-spin h-5 w-5 mr-2" xmlns="[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span id="aiButtonText">Get AI Question</span>
+            </button>
+            <button id="sendButton" class="btn-primary w-full font-bold py-3 px-4 rounded-lg shadow-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transition duration-300">
+                Send Mail
+            </button>
+            <button id="showCheckReplyButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+                Check for a Reply?
+            </button>
+        </div>
+    </div>
+
+    <div id="checkReplyContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
+        <!-- (Unchanged) -->
+    </div>
+
+    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+        <!-- (Unchanged) -->
+        <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
+        <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
+        <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
+        <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
+        <div class="space-y-4">
+            <a href="[https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk](https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk)" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+                Download LCA App (.apk)
+            </a>
+        </div>
+        <div class="text-left mt-8">
+            <!-- (Unchanged) -->
+        </div>
+        <p class="text-gray-400 text-sm mt-8">
+            If you have a user link, please open it directly to send a message.
+        </p>
+    </div>
+
+    <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
+        <!-- (Unchanged) -->
+    </div>
+    
+    <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
+        <!-- (Unchanged) -->
+    </div>
+
+
+    <script src="[https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js](https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js)"></script>
+    <script src="[https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js](https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js)"></script>
+    <script src="[https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js](https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js)"></script>
+
+    <!-- ********** THIS SCRIPT IS HEAVILY UPDATED ********** -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const firebaseConfig = {
+                apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
+                authDomain: "confessapp-e1aff.firebaseapp.com",
+                projectId: "confessapp-e1aff",
+                storageBucket: "confessapp-e1aff.firebasestorage.app",
+                messagingSenderId: "1036012328977",
+                appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            
+            const db = firebase.firestore();
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+
+            const sendMailContainer = document.getElementById('sendMailContainer');
+            const checkReplyContainer = document.getElementById('checkReplyContainer');
+            const promoContainer = document.getElementById('promoContainer');
+            
+            // (All other element getters are unchanged)
+            const sendButton = document.getElementById('sendButton');
+            const aiButton = document.getElementById('aiButton');
+            const aiButtonText = document.getElementById('aiButtonText');
+            const aiButtonIcon = document.getElementById('aiButtonIcon');
+            const aiButtonLoading = document.getElementById('aiButtonLoading');
+            const messageText = document.getElementById('messageText');
+            const clueText = document.getElementById('clueText');
+            const replyPassword = document.getElementById('replyPassword');
+            const checkButton = document.getElementById('checkButton');
+            const checkPassword = document.getElementById('checkPassword');
+            const replyDisplay = document.getElementById('replyDisplay');
+            const replyText = document.getElementById('replyText');
+            const messageBox = document.getElementById('messageBox');
+            const messageBoxText = document.getElementById('messageBoxText');
+            const letterHeader = document.getElementById('letterHeader');
+            const headerText = document.getElementById('headerText');
+            const adModal = document.getElementById('adModal');
+            const adDownloadButton = document.getElementById('adDownloadButton');
+            const adCloseButton = document.getElementById('adCloseButton');
+            const showCheckReplyButton = document.getElementById('showCheckReplyButton');
+            const showSendMailButton = document.getElementById('showSendMailButton');
+            const receiptMessage = document.getElementById('receiptMessage');
+            const copyUserLinkButton = document.getElementById('copyUserLinkButton');
+            
+            let currentHeaderText = 'tell me anything';
+            let currentHeaderColor = '#ffb3c6';
+            let currentTheme = 'default';
+            
+            if (userId) {
+                promoContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
+                sendMailContainer.classList.remove('hidden');
+                
+                // --- NEW: Load user settings AND global events ---
+                const linkRef = db.collection("publicLinks").doc(userId);
+                const eventRef = db.collection("globalConfig").doc("events");
+
+                Promise.all([linkRef.get(), eventRef.get()])
+                    .then(([linkDoc, eventDoc]) => {
+                        let userTheme = 'default';
+                        let userHeader = 'tell me anything';
+                        let userColor = '#ffb3c6';
+
+                        // 1. Get the user's saved settings
+                        if (linkDoc.exists) {
+                            const data = linkDoc.data();
+                            userTheme = data.theme || 'default';
+                            userHeader = data.linkHeaderText || 'tell me anything';
+                            userColor = data.linkHeaderColor || '#ffb3c6';
+                        }
+
+                        // 2. Get global event status
+                        let activeEvent = null;
+                        if (eventDoc.exists()) {
+                            const events = eventDoc.data();
+                            // Check in priority order (Valentines > New Year > Christmas > Halloween)
+                            if (events.valentines) activeEvent = 'event_valentines';
+                            else if (events.newyear) activeEvent = 'event_newyear';
+                            else if (events.christmas) activeEvent = 'event_christmas';
+                            else if (events.halloween) activeEvent = 'event_halloween';
+                        }
+
+                        // 3. Decide the FINAL theme
+                        // If an event is active, it OVERRIDES the user's theme
+                        const finalTheme = activeEvent || userTheme;
+
+                        // 4. Apply the settings
+                        if (finalTheme !== 'default') {
+                            // If it's an event, we need to get the event's header text/color
+                            if (activeEvent) {
+                                // (We have to hardcode event details here)
+                                const eventDetails = {
+                                    event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
+                                    event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
+                                    event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
+                                    event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
+                                };
+                                currentHeaderText = eventDetails[activeEvent].text;
+                                currentHeaderColor = eventDetails[activeEvent].color;
+                            } else {
+                                // It's a user's custom theme, use their saved settings
+                                // We also need to get the right colors for the new themes
+                                const themeDetails = {
+                                    theme_ocean: { text: userHeader, color: userColor || '#0a4f70' },
+                                    theme_cherry: { text: userHeader, color: userColor || '#f78da7' },
+                                    theme_gamer: { text: userHeader, color: userColor || '#581c87' },
+                                    theme_gold: { text: userHeader, color: userColor || '#d4af37' },
+                                };
+                                currentHeaderText = themeDetails[finalTheme] ? themeDetails[finalTheme].text : userHeader;
+                                currentHeaderColor = themeDetails[finalTheme] ? themeDetails[finalTheme].color : userColor;
+                            }
+                        } else {
+                            // It's the default theme
+                            currentHeaderText = userHeader;
+                            currentHeaderColor = userColor;
+                        }
+                        
+                        currentTheme = finalTheme;
+
+                        // 5. Update the DOM
+                        headerText.innerText = currentHeaderText;
+                        letterHeader.style.backgroundColor = currentHeaderColor;
+                        
+                        // --- NEW: Apply correct theme class ---
+                        // Clear all possible theme classes
+                        document.body.classList.remove(
+                            'event-halloween', 'event-christmas', 'event-newyear', 'event-valentines',
+                            'theme-ocean', 'theme-cherry', 'theme-gamer', 'theme-gold'
+                        );
+                        // Add the correct one
+                        if (currentTheme !== 'default') {
+                            document.body.classList.add(currentTheme.replace('_', '-'));
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.error("Error getting settings:", error);
+                        // Page will just use default pink theme
+                    });
+                
+            } else {
+                sendMailContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
+                promoContainer.classList.remove('hidden');
+            }
+
+            
+            aiButton.onclick = async () => {
+                // (This function is unchanged)
+                aiButton.disabled = true;
+                aiButtonText.innerText = "Generating...";
+                aiButtonIcon.classList.add('hidden');
+                aiButtonLoading.classList.remove('hidden');
+
+                const apiKey = "AIzaSyC2IDYSpD4JZ45NZWbKuIQRP6RNvdQSAxg"; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                
+                const prompt = "Generate one, and only one, fun, flirty, or interesting anonymous question to ask a friend. It should be a single sentence. Do not include quotes. Examples: 'What's a secret you've never told anyone?', 'Do you have a crush on me?', 'Describe me in 3 words.'";
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: prompt }] }],
+                            safetySettings: [
+                                { "category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_ONLY_HIGH" },
+                                { "category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_ONLY_HIGH" }
+                            ]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        console.error("Gemini API Error Response:", errorData);
+                        throw new Error(`HTTP error! status: ${response.status} - ${errorData.error.message}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (!result.candidates || !result.candidates[0].content || !result.candidates[0].content.parts) {
+                        console.error("Invalid response structure from Gemini:", result);
+                        throw new Error("Invalid response structure from AI.");
+                    }
+
+                    const aiText = result.candidates[0].content.parts[0].text;
+                    
+                    messageText.value = aiText.trim();
+                    messageText.focus();
+
+                } catch (error) {
+                    console.error("Gemini AI Error:", error.message);
+                    showMessage(`AI Error: ${error.message}. (Note: If this is a 403 error, check your API key restrictions in Google Cloud Console.)`, "error");
+                    
+                    messageText.value = "What's your honest opinion of me?";
+                } finally {
+                    aiButton.disabled = false;
+                    aiButtonText.innerText = "Get AI Question";
+                    aiButtonIcon.classList.remove('hidden');
+                    aiButtonLoading.classList.add('hidden');
+                }
+            };
+
+            sendButton.onclick = async () => {
+                // (This function is unchanged)
+                if (!userId) {
+                    showMessage("ERROR: No user ID found in the link.", "error");
+                    return;
+                }
+                const text = messageText.value.trim();
+                const clue = clueText.value.trim();
+                const password = replyPassword.value.trim();
+
+                if (text === "") {
+                    showMessage("You can't send an empty message.", "error");
+                    return;
+                }
+                if (password === "") {
+                    showMessage("You must create a password to check for replies.", "error");
+                    return;
+                }
+                
+                const replyId = CryptoJS.SHA256(password + userId).toString();
+
+                sendButton.disabled = true;
+                sendButton.innerText = "Sending...";
+                
+                try {
+                    const messagesRef = db.collection("users").doc(userId).collection("messages");
+                    let payload = {
+                        text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        read: false, hasClue: false, fromAi: false, 
+                        headerText: currentHeaderText, headerColor: currentHeaderColor, theme: currentTheme,
+                        replyId: replyId
+                    };
+                    if (clue !== "") {
+                        payload.hasClue = true;
+                        payload.clueText = clue;
+                    }
+                    
+                    await messagesRef.add(payload);
+                
+                    const emoji = document.createElement('span');
+                    emoji.innerHTML = '💌';
+                    emoji.className = 'send-animation';
+                    sendMailContainer.appendChild(emoji);
+                    setTimeout(() => {
+                        emoji.remove();
+                    }, 2000);
+                    
+                    receiptMessage.innerText = `Your message: "${text.substring(0, 50)}${text.length > 50 ? '...' : ''}"`;
+                    adModal.classList.remove('hidden');
+
+                    messageText.value = "";
+                    clueText.value = "";
+                    replyPassword.value = "";
+                    
+                } catch (error) {
+                    console.error("Error sending message: ", error);
+                    if (error.code === 'unauthenticated' || error.code === 'permission-denied') {
+                        showMessage("Security check failed. Please refresh the page.", "error");
+                    } else {
+                        showMessage("An error occurred. Please try again.", "error");
+                    }
+                } finally {
+                    sendButton.disabled = false;
+                    sendButton.innerText = "Send Mail";
+                }
+            };
+            
+            checkButton.onclick = async () => {
+                // (This function is unchanged)
+                const password = checkPassword.value.trim();
+                if (password === "") {
+                    showMessage("Please enter your secret password.", "error");
+                    return;
+                }
+                
+                let checkingUserId = userId;
+                if (!checkingUserId) {
+                    const params = new URLSearchParams(window.location.search);
+                    checkingUserId = params.get('id');
+                    if(!checkingUserId) {
+                        showMessage("Error: No user link found.", "error");
+                        return;
+                    }
+                }
+                
+                const replyId = CryptoJS.SHA256(password + checkingUserId).toString();
+                
+                checkButton.disabled = true;
+                checkButton.innerText = "Checking...";
+                
+                try {
+                    const replyRef = db.collection("replies").doc(replyId);
+                    const doc = await replyRef.get();
+                    
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.toUserId === checkingUserId) {
+                            replyText.innerText = data.replyText;
+                            replyDisplay.classList.remove('hidden');
+                            showMessage("Reply found!", "success");
+                        } else {
+                            showMessage("Password not found for this user.", "error");
+                        }
+                    } else {
+                        showMessage("No reply yet, or password was wrong.", "error");
+                    }
+                } catch (e) {
+                    console.error("Error checking reply:", e);
+                    if (e.code === 'unauthenticated' || e.code === 'permission-denied') {
+                        showMessage("Security check failed. Please refresh the page.", "error");
+                    } else {
+                        showMessage("An error occurred.", "error");
+                    }
+                } finally {
+                    checkButton.disabled = false;
+                    checkButton.innerText = "Check Mailbox";
+                }
+            };
+
+            // (All other button clicks are unchanged)
+            showCheckReplyButton.onclick = () => {
+                sendMailContainer.classList.add('hidden');
+                checkReplyContainer.classList.remove('hidden');
+            };
+            showSendMailButton.onclick = () => {
+                checkReplyContainer.classList.add('hidden');
+                sendMailContainer.classList.remove('hidden');
+            };
+            adCloseButton.onclick = () => {
+                adModal.classList.add('hidden');
+            };
+            adDownloadButton.onclick = () => {
+                // --- NEW: Using the latest APK link from your old code ---
+                window.location.href = '[https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk](https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk)';
+            };
+
+            copyUserLinkButton.onclick = () => {
+                const userLink = `https://uwuuuu4.github.io/LIFEConfess/?id=${userId}`;
+                navigator.clipboard.writeText(userLink).then(() => {
+                    showMessage("User's link copied to clipboard!", "success");
+                }, (err) => {
+                    showMessage("Failed to copy link.", "error");
+                });
+            };
+
+            function showMessage(text, type) {
+                // (This function is unchanged)
+                messageBoxText.innerText = text;
+                if (type === "success") {
+                    messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
+                } else {
                     messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
                 }
                 messageBox.classList.remove('hidden');
@@ -595,4 +1368,3 @@
     </script>
 </body>
 </html>
-
