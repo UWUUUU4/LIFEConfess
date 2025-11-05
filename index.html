@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Anonymous Mail to LCA</title>
-
     <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
     <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
     <meta property="og:type" content="website" />
@@ -16,13 +15,10 @@
     <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
     <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
     <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
-
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
-    
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -30,17 +26,14 @@
             transition: background-color 0.3s ease;
             user-select: none;
         }
-        
         #sendMailContainer, #checkReplyContainer {
             position: relative;
         }
-        
         .watermark {
             position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
             font-weight: bold; color: #e6e6e6; opacity: 0.5;
             transform: rotate(-15deg); pointer-events: none;
         }
-
         .event-halloween {
             background-color: #2d1142;
             font-family: 'Creepster', cursive;
@@ -67,7 +60,6 @@
         .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
         .event-halloween .btn-secondary:hover { background-color: #666; }
         .event-halloween .watermark { color: #444; opacity: 0.2; }
-
         .event-christmas {
             background-color: #f0f7f4;
             font-family: 'Mountains of Christmas', cursive;
@@ -90,7 +82,6 @@
         .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
         .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
         .event-christmas .watermark { color: #d4e9e2; }
-
         .event-valentines { background-color: #fff1f2; }
         .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
         .event-valentines #sendMailContainer::before {
@@ -110,7 +101,6 @@
         .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
         .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
         .event-valentines .watermark { color: #fce7f3; }
-
         .event-newyear { background-color: #030712; }
         .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
         .event-newyear #sendMailContainer::before {
@@ -130,7 +120,6 @@
         .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
         .event-newyear .btn-secondary:hover { background-color: #4b5563; }
         .event-newyear .watermark { color: #374151; }
-
         .theme-ocean { background-color: #030e21; }
         .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
         .theme-ocean #letterHeader { background-color: #0a4f70; }
@@ -144,7 +133,6 @@
         .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
         .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
         .theme-ocean .watermark { color: #0a192f; }
-
         .theme-cherry { background-color: #fffafa; }
         .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
         .theme-cherry #letterHeader { background-color: #f78da7; }
@@ -159,7 +147,6 @@
         .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
         .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
         .theme-cherry .watermark { color: #fce6ec; }
-
         .theme-gamer { background-color: #000; }
         .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
         .theme-gamer #letterHeader { background-color: #581c87; }
@@ -176,7 +163,6 @@
         .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
         .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
         .theme-gamer .watermark { color: #1a1a1a; }
-
         .theme-gold { background-color: #0c0c0c; }
         .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
         .theme-gold #letterHeader { background-color: #d4af37; }
@@ -191,7 +177,6 @@
         .theme-gold .btn-secondary { background-color: #222; color: #d4af37; }
         .theme-gold .btn-secondary:hover { background-color: #333; }
         .theme-gold .watermark { color: #222; }
-
         .send-animation {
             position: absolute; bottom: 70px; left: 50%; font-size: 3rem;
             animation: float-up 2s ease-out forwards;
@@ -257,7 +242,7 @@
         </div>
     </div>
 
-    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center hidden">
+    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
         <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
         <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
@@ -390,6 +375,8 @@
             
             if (userId) {
                 sendMailContainer.classList.remove('hidden');
+                promoContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
                 
                 const linkRef = db.collection("publicLinks").doc(userId);
                 const eventRef = db.collection("globalConfig").doc("events");
@@ -463,6 +450,8 @@
                 
             } else {
                 promoContainer.classList.remove('hidden');
+                sendMailContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
             }
 
             
