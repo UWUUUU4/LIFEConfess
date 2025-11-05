@@ -4,32 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send Anonymous Mail to LCA</title>
-
-    <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
-    <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://uwuuuu4.github.io/LIFEConfess/" />
-    <meta property="og:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
-    <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
-    <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
-
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- 1. DEFAULT STYLES (Your original, working styles) --- */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #FFF7F9;
-            transition: background-color 0.3s ease;
-            user-select: none;
         }
         #sendMailContainer, #checkReplyContainer {
             position: relative;
@@ -38,199 +21,31 @@
             background-color: #fff; border: none; width: 100%;
             padding: 1rem; line-height: 1.6; font-size: 16px; color: #4a4a4a;
             font-family: 'Inter', sans-serif;
-            transition: border-color 0.3s ease;
         }
         .form-input:focus { box-shadow: none; outline: none; }
         .clue-input {
              background-color: #f8f7ff; border: 1px solid #e6e6e6;
              font-family: 'Inter', sans-serif;
-             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .clue-input:focus {
             border-color: #ff77a9; box-shadow: 0 0 0 2px #ffb3c6; outline: none;
         }
         .btn-primary {
-            background-color: #ff77a9;
-            color: white;
-            transition: background-color 0.3s ease;
+            background-color: #ff77a9; color: white;
         }
-        .btn-primary:hover { background-color: #ff69b4; }
         .btn-secondary {
             background-color: #e6e6e6; color: #4a4a4a;
-            transition: background-color 0.3s ease;
         }
-        .btn-secondary:hover { background-color: #dcdcdc; }
         .watermark {
             position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
             font-weight: bold; color: #e6e6e6; opacity: 0.5;
             transform: rotate(-15deg); pointer-events: none;
         }
-        .send-animation {
-            position: absolute; bottom: 70px; left: 50%; font-size: 3rem;
-            animation: float-up 2s ease-out forwards;
-            pointer-events: none; z-index: 100;
-        }
-        @keyframes float-up {
-            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
-            100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
-        }
-
-        /* --- 2. ALL THEMES (Old + New) --- */
-        .event-halloween {
-            background-color: #2d1142;
-            font-family: 'Creepster', cursive;
-            background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
-            background-size: 30px 30px;
-        }
-        .event-halloween #sendMailContainer { border: 2px solid #f38323; }
-        .event-halloween #sendMailContainer::before {
-            content: '👻';
-            position: absolute; top: -20px; left: -25px;
-            font-size: 3rem; transform: rotate(-20deg); opacity: 0.9; z-index: 10;
-        }
-        .event-halloween #letterHeader { background-color: #f38323; }
-        .event-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; }
-        .event-halloween .form-input, .event-halloween .clue-input { 
-            font-family: 'Creepster', cursive;
-            background-color: #1a1a1a; color: #ffab73;
-            border: 1px solid #f38323; font-size: 1.1rem;
-        }
-        .event-halloween .form-input::placeholder, .event-halloween .clue-input::placeholder { color: #b37a50; }
-        .event-halloween .clue-input:focus { border-color: #f38323; box-shadow: 0 0 0 3px #ffab73; }
-        .event-halloween .btn-primary { background-color: #f38323; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
-        .event-halloween .btn-primary:hover { background-color: #d46f1a; }
-        .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
-        .event-halloween .btn-secondary:hover { background-color: #666; }
-        .event-halloween .watermark { color: #444; opacity: 0.2; }
-
-        .event-christmas {
-            background-color: #f0f7f4;
-            font-family: 'Mountains of Christmas', cursive;
-        }
-        .event-christmas #sendMailContainer { border: 2px solid #0c8346; }
-        .event-christmas #sendMailContainer::before {
-            content: '🎄';
-            position: absolute; top: -20px; right: -15px;
-            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
-        }
-        .event-christmas #letterHeader { background-color: #c41d34; }
-        .event-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
-        .event-christmas .form-input, .event-christmas .clue-input {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 1.25rem; background-color: #fff; color: #2b2b2b; border-color: #d4e9e2;
-        }
-        .event-christmas .clue-input:focus { border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0; }
-        .event-christmas .btn-primary { background-color: #0c8346; }
-        .event-christmas .btn-primary:hover { background-color: #0a6b38; }
-        .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
-        .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
-        .event-christmas .watermark { color: #d4e9e2; }
-
-        .event-valentines { background-color: #fff1f2; }
-        .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
-        .event-valentines #sendMailContainer::before {
-            content: '💘';
-            position: absolute; top: -20px; left: -20px;
-            font-size: 3rem; transform: rotate(-25deg); opacity: 0.9; z-index: 10;
-        }
-        .event-valentines #letterHeader { background-color: #e11d48; }
-        .event-valentines #headerText { font-size: 2rem; font-family: 'serif'; font-style: italic; }
-        .event-valentines .form-input, .event-valentines .clue-input {
-            font-family: 'serif'; font-style: italic;
-            font-size: 1.1rem; background-color: #fff; color: #be123c; border-color: #fbcfe8;
-        }
-        .event-valentines .clue-input:focus { border-color: #e11d48; box-shadow: 0 0 0 2px #fbcfe8; }
-        .event-valentines .btn-primary { background-color: #e11d48; }
-        .event-valentines .btn-primary:hover { background-color: #be123c; }
-        .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
-        .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
-        .event-valentines .watermark { color: #fce7f3; }
-
-        .event-newyear { background-color: #030712; }
-        .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
-        .event-newyear #sendMailContainer::before {
-            content: '🎆';
-            position: absolute; top: -15px; right: -15px;
-            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
-        }
-        .event-newyear #letterHeader { background-color: #111827; }
-        .event-newyear #headerText { font-size: 2rem; text-shadow: 1px 1px 10px #fff; }
-        .event-newyear .form-input, .event-newyear .clue-input {
-            font-family: 'serif'; font-weight: bold;
-            font-size: 1.1rem; background-color: #1f2937; color: #f1f5f9; border-color: #374151;
-        }
-        .event-newyear .clue-input:focus { border-color: #f1f5f9; box-shadow: 0 0 0 2px #4b5563; }
-        .event-newyear .btn-primary { background-color: #f1f5f9; color: #111827; }
-        .event-newyear .btn-primary:hover { background-color: #e5e7eb; }
-        .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
-        .event-newyear .btn-secondary:hover { background-color: #4b5563; }
-        .event-newyear .watermark { color: #374151; }
-
-        .theme-ocean { background-color: #030e21; }
-        .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
-        .theme-ocean #letterHeader { background-color: #0a4f70; }
-        .theme-ocean .form-input, .theme-ocean .clue-input {
-            font-family: 'monospace';
-            font-size: 1rem; background-color: #0a192f; color: #ccd6f6; border-color: #0a4f70;
-        }
-        .theme-ocean .clue-input:focus { border-color: #a1c4fd; box-shadow: 0 0 0 2px #0a192f; }
-        .theme-ocean .btn-primary { background-color: #a1c4fd; color: #0a192f; }
-        .theme-ocean .btn-primary:hover { background-color: #89acdd; }
-        .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
-        .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
-        .theme-ocean .watermark { color: #0a192f; }
-
-        .theme-cherry { background-color: #fffafa; }
-        .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
-        .theme-cherry #letterHeader { background-color: #f78da7; }
-        .theme-cherry #headerText { font-family: 'serif'; }
-        .theme-cherry .form-input, .theme-cherry .clue-input {
-            font-family: 'serif'; font-size: 1.1rem;
-            background-color: #fff0f5; color: #5c333f; border-color: #f7d8e2;
-        }
-        .theme-cherry .clue-input:focus { border-color: #f78da7; box-shadow: 0 0 0 2px #fce6ec; }
-        .theme-cherry .btn-primary { background-color: #f78da7; }
-        .theme-cherry .btn-primary:hover { background-color: #f57092; }
-        .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
-        .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
-        .theme-cherry .watermark { color: #fce6ec; }
-
-        .theme-gamer { background-color: #000; }
-        .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
-        .theme-gamer #letterHeader { background-color: #581c87; }
-        .theme-gamer #headerText { text-shadow: 1px 1px 5px #00ff00; }
-        .theme-gamer .form-input, .theme-gamer .clue-input {
-            font-family: 'monospace'; font-size: 1rem;
-            background-color: #1a1a1a; color: #00ff00; border-color: #3a105c;
-            text-shadow: 0 0 5px #00ff00;
-        }
-        .theme-gamer .form-input::placeholder, .theme-gamer .clue-input::placeholder { color: #008000; }
-        .theme-gamer .clue-input:focus { border-color: #00ff00; box-shadow: 0 0 0 2px #581c87; }
-        .theme-gamer .btn-primary { background-color: #00ff00; color: #000; }
-        .theme-gamer .btn-primary:hover { background-color: #00cc00; }
-        .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
-        .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
-        .theme-gamer .watermark { color: #1a1a1a; }
-
-        .theme-gold { background-color: #0c0c0c; }
-        .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
-        .theme-gold #letterHeader { background-color: #d4af37; }
-        .theme-gold #headerText { color: #000; font-family: 'serif'; font-weight: bold; }
-        .theme-gold .form-input, .theme-gold .clue-input {
-            font-family: 'serif'; font-size: 1.1rem;
-            background-color: #111111; color: #ffd700; border-color: #222;
-        }
-        .theme-gold .clue-input:focus { border-color: #d4af37; box-shadow: 0 0 0 2px #222; }
-        .theme-gold .btn-primary { background-color: #d4af37; color: #000; }
-        .theme-gold .btn-primary:hover { background-color: #b89b30; }
-        .theme-gold .btn-secondary { background-color: #222; color: #d4af37; }
-        .theme-gold .btn-secondary:hover { background-color: #333; }
-        .theme-gold .watermark { color: #222; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <!-- 1. Send Mail Container (Your original HTML) -->
+    <!-- Send Mail Container -->
     <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
         <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
             <div id="letterHeader" class="bg-pink-400 p-4">
@@ -264,7 +79,7 @@
         </div>
     </div>
 
-    <!-- 2. Check Reply Container (Your original HTML) -->
+    <!-- Check Reply Container -->
     <div id="checkReplyContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
         <h1 class="text-3xl font-bold text-center text-pink-500 mb-4">Check for Reply</h1>
         <p class="text-center text-gray-500 mb-6">Enter the secret password you created to see if you got a reply.</p>
@@ -283,57 +98,22 @@
         </div>
     </div>
 
-    <!-- 3. Promo Page Container (Your original HTML) -->
+    <!-- Promo Page Container -->
     <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center hidden">
         <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
         <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
         <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
         <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
-        <div class="space-y-4">
-            <a href="https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
-                Download LCA App (.apk)
-            </a>
-        </div>
-        <div class="text-left mt-8">
-            <h3 class="font-bold text-lg text-gray-800 mb-4">What's inside?</h3>
-            <ul class="space-y-3 text-gray-600 mb-8">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Get secret messages with optional clues.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    <span>Customize your link page with colors & themes.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Get "Nice Vibes" from our friendly AI ghost.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg>
-                    <span>A cute, simple grid to see all your mail.</span>
-                </li>
-            </ul>
-            <h3 class="font-bold text-lg text-gray-800">What is LCA?</h3>
-            <p class="text-gray-600 text-sm mt-2 mb-4">
-                LCA is your personal, secret mailbox! Get the app, share your unique link, and let friends, classmates, or crushes send you anonymous messages. It's the most fun way to hear their real thoughts!
-            </p>
-            <h3 class="font-bold text-lg text-gray-800">Privacy & Safety</h3>
-            <p class="text-gray-600 text-sm mt-2">
-                We've got your back. All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional—senders only share what *they* want to.
-            </p>
-        </div>
-        <p class="text-gray-400 text-sm mt-8">
-            If you have a user link, please open it directly to send a message.
-        </p>
+        <a href="https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
+            Download LCA App (.apk)
+        </a>
     </div>
 
-    <!-- 4. Modals (Your original HTML) -->
+    <!-- Modals -->
     <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
         <p id="messageBoxText" class="font-medium text-center"></p>
     </div>
-    
-    <div id="adModal" class*="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full text-center">
             <img src="econ.png" alt="LCA App Icon" class="w-24 h-24 rounded-2xl mx-auto shadow-lg mb-4 -mt-16 border-4 border-white" />
             <h3 class="text-2xl font-bold text-pink-500 mb-2">Message Sent! 💌</h3>
@@ -355,12 +135,11 @@
         </div>
     </div>
 
-
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
-    <!-- 5. THE NEW, WORKING SCRIPT -->
+    <!-- NEW, SIMPLE, WORKING SCRIPT -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const firebaseConfig = {
@@ -373,7 +152,6 @@
             };
 
             firebase.initializeApp(firebaseConfig);
-            
             const db = firebase.firestore();
 
             const aiQuestions = [
@@ -426,6 +204,9 @@
             const receiptMessage = document.getElementById('receiptMessage');
             const copyUserLinkButton = document.getElementById('copyUserLinkButton');
             
+            // --- THIS IS THE ONLY LOGIC WE NEED FOR NOW ---
+            // --- IT IS YOUR ORIGINAL, WORKING LOGIC ---
+            
             let currentHeaderText = 'tell me anything';
             let currentHeaderColor = '#ffb3c6';
             let currentTheme = 'default';
@@ -436,69 +217,38 @@
                 checkReplyContainer.classList.add('hidden');
                 
                 const linkRef = db.collection("publicLinks").doc(userId);
-                const eventRef = db.collection("globalConfig").doc("events");
-
-                Promise.all([linkRef.get(), eventRef.get()])
-                    .then(([linkDoc, eventDoc]) => {
-                        let userTheme = 'default';
-                        let userHeader = 'tell me anything';
-                        let userColor = '#ffb3c6';
-                        if (linkDoc.exists()) {
-                            const data = linkDoc.data();
-                            userTheme = data.theme || 'default';
-                            userHeader = data.linkHeaderText || 'tell me anything';
-                            userColor = data.linkHeaderColor || '#ffb3c6';
-                        }
-
-                        let activeEvent = null;
-                        if (eventDoc.exists()) {
-                            const events = eventDoc.data();
-                            if (events.valentines) activeEvent = 'event_valentines';
-                            else if (events.newyear) activeEvent = 'event_newyear';
-                            else if (events.christmas) activeEvent = 'event_christmas';
-                            else if (events.halloween) activeEvent = 'event_halloween';
-                        }
-
-                        currentTheme = activeEvent || userTheme;
-
-                        if (currentTheme === 'default') {
-                            currentHeaderText = userHeader;
-                            currentHeaderColor = userColor;
-                        } else if (currentTheme.startsWith('event_')) {
-                            const eventDetails = {
-                                event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
-                                event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
-                                event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
-                                event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
-                            };
-                            currentHeaderText = eventDetails[currentTheme].text;
-                            currentHeaderColor = eventDetails[currentTheme].color;
-                        } else if (currentTheme.startsWith('theme_')) {
-                            currentHeaderText = userHeader;
-                            currentHeaderColor = userColor;
+                
+                linkRef.get().then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        
+                        if (data.linkHeaderText) {
+                            headerText.innerText = data.linkHeaderText;
+                            currentHeaderText = data.linkHeaderText;
                         }
                         
-                        headerText.innerText = currentHeaderText;
-                        letterHeader.style.backgroundColor = currentHeaderColor;
-                        
-                        document.body.classList.remove(
-                            'event-halloween', 'event-christmas', 'event-newyear', 'event-valentines',
-                            'theme-ocean', 'theme-cherry', 'theme-gamer', 'theme-gold'
-                        );
-                        if (currentTheme !== 'default') {
-                            document.body.classList.add(currentTheme.replace('_', '-'));
+                        if (data.linkHeaderColor) {
+                            letterHeader.style.backgroundColor = data.linkHeaderColor;
+                            currentHeaderColor = data.linkHeaderColor;
                         }
-
-                    })
-                    .catch((error) => {
-                        console.error("Error getting settings:", error);
-                    });
+                        
+                        // We will add the themes back here LATER
+                        // For now, we only care about text and color
+                        
+                    } else { 
+                        console.log("No custom link settings found."); 
+                    }
+                }).catch((error) => { 
+                    console.error("Error getting link settings:", error); 
+                });
                 
             } else {
                 promoContainer.classList.remove('hidden');
                 sendMailContainer.classList.add('hidden');
                 checkReplyContainer.classList.add('hidden');
             }
+
+            // --- ALL OTHER CODE IS YOUR WORKING, ORIGINAL CODE ---
 
             aiButton.onclick = () => {
                 aiButton.disabled = true;
@@ -550,7 +300,9 @@
                     let payload = {
                         text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         read: false, hasClue: false, fromAi: false, 
-                        headerText: currentHeaderText, headerColor: currentHeaderColor, theme: currentTheme,
+                        headerText: currentHeaderText, 
+                        headerColor: currentHeaderColor, 
+                        theme: 'default', // We'll update this later
                         replyId: replyId
                     };
                     if (clue !== "") {
@@ -644,7 +396,7 @@
                 adModal.classList.add('hidden');
             };
             adDownloadButton.onclick = () => {
-                window.location.href = 'https://expo.dev/artifacts/eas/faxtjgig89ZmSvhfgZ2Kfx.apk';
+                window.location.href = 'https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk';
             };
 
             copyUserLinkButton.onclick = () => {
