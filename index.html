@@ -433,57 +433,28 @@
             let currentTheme = 'default';
             
             if (userId) {
+                // This is the fix. Show the right container immediately.
                 sendMailContainer.classList.remove('hidden');
                 promoContainer.classList.add('hidden');
                 checkReplyContainer.classList.add('hidden');
                 
                 const linkRef = db.collection("publicLinks").doc(userId);
-                const eventRef = db.collection("globalConfig").doc("events");
+                
+                // --- THIS IS THE NEW, SIMPLE LOGIC ---
+                // We ONLY fetch the user's link settings.
+                // We DO NOT fetch "events" anymore.
+                linkRef.get().then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data() || {};
+                        currentTheme = data.theme || 'default';
+                        currentHeaderText = data.linkHeaderText || 'tell me anything';
+                        currentHeaderColor = data.linkHeaderColor || '#ffb3c6';
 
-                Promise.all([linkRef.get(), eventRef.get()])
-                    .then(([linkDoc, eventDoc]) => {
-                        
-                        let userTheme = 'default';
-                        let userHeader = 'tell me anything';
-                        let userColor = '#ffb3c6';
-                        if (linkDoc.exists) {
-                            const data = linkDoc.data() || {};
-                            userTheme = data.theme || 'default';
-                            userHeader = data.linkHeaderText || 'tell me anything';
-                            userColor = data.linkHeaderColor || '#ffb3c6';
-                        }
-
-                        let activeEvent = null;
-                        if (eventDoc.exists) {
-                            const events = eventDoc.data() || {};
-                            if (events.valentines) activeEvent = 'event_valentines';
-                            else if (events.newyear) activeEvent = 'event_newyear';
-                            else if (events.christmas) activeEvent = 'event_christmas';
-                            else if (events.halloween) activeEvent = 'event_halloween';
-                        }
-
-                        currentTheme = activeEvent || userTheme;
-
-                        if (currentTheme === 'default') {
-                            currentHeaderText = userHeader;
-                            currentHeaderColor = userColor;
-                        } else if (currentTheme.startsWith('event_')) {
-                            const eventDetails = {
-                                event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
-                                event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
-                                event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
-                                event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
-                            };
-                            currentHeaderText = eventDetails[currentTheme].text;
-                            currentHeaderColor = eventDetails[currentTheme].color;
-                        } else if (currentTheme.startsWith('theme_')) {
-                            currentHeaderText = userHeader;
-                            currentHeaderColor = userColor;
-                        }
-                        
+                        // Apply to the page
                         headerText.innerText = currentHeaderText;
                         letterHeader.style.backgroundColor = currentHeaderColor;
                         
+                        // Apply theme class
                         document.body.classList.remove(
                             'event-halloween', 'event-christmas', 'event-newyear', 'event-valentines',
                             'theme-ocean', 'theme-cherry', 'theme-gamer', 'theme-gold'
@@ -491,13 +462,17 @@
                         if (currentTheme !== 'default') {
                             document.body.classList.add(currentTheme.replaceAll('_', '-'));
                         }
-
-                    })
-                    .catch((error) => {
-                        console.error("Error getting settings:", error);
-                        headerText.innerText = 'tell me anything';
-                        letterHeader.style.backgroundColor = '#ffb3c6';
-                    });
+                        
+                    } else { 
+                        console.log("No custom link settings found. Using default.");
+                        headerText.innerText = currentHeaderText;
+                        letterHeader.style.backgroundColor = currentHeaderColor;
+                    }
+                }).catch((error) => { 
+                    console.error("Error getting link settings:", error); 
+                    headerText.innerText = currentHeaderText;
+                    letterHeader.style.backgroundColor = currentHeaderColor;
+                });
                 
             } else {
                 promoContainer.classList.remove('hidden');
