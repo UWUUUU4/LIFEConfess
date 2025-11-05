@@ -1,166 +1,503 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Send Anonymous Mail to LCA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Anonymous Mail to LCA</title>
 
-    <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
-    <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://uwuuuu4.github.io/LIFEConfess/" />
-    <meta property="og:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
-    <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
-    <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
+    <meta property="og:title" content="LCA - Send Me Anonymous Mail! 💌" />
+    <meta property="og:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://uwuuuu4.github.io/LIFEConfess/" />
+    <meta property="og:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="LCA - Send Me Anonymous Mail! 💌" />
+    <meta name="twitter:description" content="Your anonymous mailbox awaits. Click to send me a secret message or clue... 🤫" />
+    <meta name="twitter:image" content="https://uwuuuu4.github.io/LIFEConfess/econ.png" />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- NEW: Linked Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FFF7F9;
+            transition: background-color 0.3s ease;
+        }
+        
+        #sendMailContainer, #checkReplyContainer {
+            position: relative;
+        }
+
+        .form-input {
+            background-color: #fff; border: none; width: 100%;
+            padding: 1rem; line-height: 1.6; font-size: 16px; color: #4a4a4a;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+        .form-input:focus { box-shadow: none; outline: none; }
+        
+        .clue-input {
+             background-color: #f8f7ff; border: 1px solid #e6e6e6;
+             font-family: 'Inter', sans-serif;
+             transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .clue-input:focus {
+            border-color: #ff77a9; box-shadow: 0 0 0 2px #ffb3c6; outline: none;
+        }
+        
+        .btn-primary {
+            background-color: #ff77a9;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover { background-color: #ff69b4; }
+        
+        .btn-secondary {
+            background-color: #e6e6e6; color: #4a4a4a;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover { background-color: #dcdcdc; }
+        
+        .watermark {
+            position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
+            font-weight: bold; color: #e6e6e6; opacity: 0.5;
+            transform: rotate(-15deg); pointer-events: none;
+        }
+
+        .theme-halloween {
+            background-color: #2d1142;
+            font-family: 'Creepster', cursive;
+            background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .theme-halloween #sendMailContainer, .theme-halloween #checkReplyContainer {
+            border: 2px solid #f38323;
+        }
+        .theme-halloween #sendMailContainer::before {
+            content: '👻';
+            position: absolute;
+            top: -20px;
+            left: -25px;
+            font-size: 3rem;
+            transform: rotate(-20deg);
+            opacity: 0.9;
+            z-index: 10;
+        }
+        .theme-halloween #letterHeader { background-color: #f38323; }
+        .theme-halloween #headerText { 
+            font-size: 2rem; 
+            letter-spacing: 2px; 
+            text-shadow: 2px 2px 4px #000;
+        }
+        .theme-halloween .form-input, .theme-halloween .clue-input { 
+            font-family: 'Creepster', cursive;
+            background-color: #1a1a1a;
+            color: #ffab73;
+            border: 1px solid #f38323;
+            font-size: 1.1rem;
+        }
+        .theme-halloween .clue-input:focus {
+            border-color: #f38323; box-shadow: 0 0 0 3px #ffab73;
+        }
+        .theme-halloween .btn-primary { 
+            background-color: #f38323; 
+            text-shadow: 1px 1px 2px #000;
+            font-size: 1.2rem;
+        }
+        .theme-halloween .btn-primary:hover { background-color: #d46f1a; }
+        .theme-halloween .btn-secondary { 
+            background-color: #444; 
+            color: #ddd; 
+            text-shadow: 1px 1px 2px #000;
+            font-size: 1.2rem;
+        }
+        .theme-halloween .btn-secondary:hover { background-color: #666; }
+        .theme-halloween .watermark { color: #444; opacity: 0.2; }
+
+        .theme-christmas {
+            background-color: #f0f7f4;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+        .theme-christmas #sendMailContainer, .theme-christmas #checkReplyContainer {
+            border: 2px solid #0c8346;
+        }
+        .theme-christmas #letterHeader { background-color: #c41d34; }
+        .theme-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
+        .theme-christmas .form-input, .theme-christmas .clue-input {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.25rem;
+            background-color: #fff;
+            color: #2b2b2b;
+            border-color: #d4e9e2;
+        }
+        .theme-christmas .clue-input:focus {
+            border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0;
+        }
+        .theme-christmas .btn-primary { background-color: #0c8346; }
+        .theme-christmas .btn-primary:hover { background-color: #0a6b38; }
+        .theme-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
+        .theme-christmas .btn-secondary:hover { background-color: #dcdcdc; }
+        .theme-christmas .watermark { color: #d4e9e2; }
+    </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
 
-    <!-- This container is for sending mail -->
-    <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
-        <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
-            <div id="letterHeader" class="bg-pink-400 p-4">
-                <p id="headerText" class="text-white text-center font-bold text-lg tracking-wider">
-                    tell me anything
-                </p>
-            </div>
-            
-            <div class="bg-white p-4 relative">
-                <textarea id="messageText" class="form-input w-full h-40 bg-white border-none resize-none p-4 text-base text-gray-700 placeholder-gray-400 focus:outline-none" placeholder="Write your message..."></textarea>
-                <div class="watermark">LCA</div>
-            </div>
-        </div>
-        <div class="space-y-4">
-            <input id="clueText" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Add a Clue (Optional, can be revealed!)" />
-            <input id="replyPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Create a secret password to check for a reply..." />
-            
-            <button id="aiButton" class="btn-secondary w-full font-bold py-3 px-4 rounded-lg shadow-md bg-gray-200 text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition duration-300 flex items-center justify-center">
-                <svg id="aiButtonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
-                <svg id="aiButtonLoading" class="hidden animate-spin h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                <span id="aiButtonText">Get AI Question</span>
-            </button>
-            <button id="sendButton" class="btn-primary w-full font-bold py-3 px-4 rounded-lg shadow-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transition duration-300">
-                Send Mail
-            </button>
-            <button id="showCheckReplyButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                Check for a Reply?
-            </button>
-        </div>
-    </div>
+    <div id="sendMailContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
+        
+        <div class="bg-pink-50 rounded-lg border border-pink-100 overflow-hidden mb-4">
+            <div id="letterHeader" class="bg-pink-400 p-4">
+                <p id="headerText" class="text-white text-center font-bold text-lg tracking-wider">
+                    tell me anything
+                </p>
+            </div>
+            
+            <div class="bg-white p-4 relative">
+                <textarea id="messageText" class="w-full h-40 form-input resize-none" placeholder="Write your message..."></textarea>
+                <div class="watermark">LCA</div>
+            </div>
+        </div>
+        <div class="space-y-4">
+            <input id="clueText" type="text" class="w-full p-4 rounded-lg shadow-sm clue-input" placeholder="Add a Clue (Optional, can be revealed!)" />
+            <input id="replyPassword" type="text" class="w-full p-4 rounded-lg shadow-sm clue-input" placeholder="Create a secret password to check for a reply..." />
+            
+            <button id="aiButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-secondary transition duration-300 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 00-1 1v1.23c-2.39.42-4.28 2.3-4.7 4.69A5 5 0 0010 15v1.23c2.39-.42 4.28 2.3 4.7-4.69A5 5 0 0010 3zm0 2a3 3 0 100 6 3 3 0 000-6zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" /></svg>
+                Get AI Question
+            </button>
+            <button id="sendButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-primary transition duration-300">
+                Send Mail
+            </button>
+            <button id="showCheckReplyButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100">
+                Check for a Reply?
+            </button>
+        </div>
+    </div>
 
-    <!-- This container is for checking replies -->
-    <div id="checkReplyContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
-        <h1 class="text-3xl font-bold text-center text-pink-500 mb-4">Check for Reply</h1>
-        <p class="text-center text-gray-500 mb-6">Enter the secret password you created to see if you got a reply.</p>
-        <div class="space-y-4">
-            <input id="checkPassword" type="text" class="clue-input w-full p-4 rounded-lg shadow-sm bg-gray-50 border border-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-pink-400" placeholder="Enter your secret password..." />
-            <button id="checkButton" class="btn-primary w-full font-bold py-3 px-4 rounded-lg shadow-md text-white bg-pink-500 hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2 transition duration-300">
-                Check Mailbox
-            </button>
-            <button id="showSendMailButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
-                Send a New Message
-            </button>
-        </div>
-        <div id="replyDisplay" class="hidden mt-6 bg-pink-50 border border-pink-100 rounded-lg p-4">
-            <h3 class="font-bold text-gray-700 mb-2">The reply from LCA:</h3>
-            <p id="replyText" class="text-gray-900"></p>
-        </div>
-    </div>
+    <div id="checkReplyContainer" class="bg-white p-6 rounded-2xl shadow-lg max-w-md w-full hidden">
+        <h1 class="text-3xl font-bold text-center text-pink-500 mb-4">Check for Reply</h1>
+        <p class="text-center text-gray-500 mb-6">Enter the secret password you created to see if you got a reply.</p>
+        <div class="space-y-4">
+            <input id="checkPassword" type="text" class="w-full p-4 rounded-lg shadow-sm clue-input" placeholder="Enter your secret password..." />
+            <button id="checkButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md btn-primary transition duration-300">
+                Check Mailbox
+            </button>
+            <button id="showSendMailButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100">
+                Send a New Message
+            </button>
+        </div>
+        <div id="replyDisplay" class="hidden mt-6 bg-pink-50 border border-pink-100 rounded-lg p-4">
+            <h3 class="font-bold text-gray-700 mb-2">The reply from LCA:</h3>
+            <p id="replyText" class="text-gray-900"></p>
+        </div>
+    </div>
 
-    <!-- This container is for the promo page (no ID) -->
-    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center hidden">
-        <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
-        <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
-        <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
-        <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
-        <div class="space-y-4">
-            <a href="https://expo.dev/artifacts/eas/gBuM44Et2bGXaRPfPtgWuG.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
-                Download LCA App (.apk)
-            </a>
-        </div>
-        <div class="text-left mt-8">
-            <h3 class="font-bold text-lg text-gray-800 mb-4">What's inside?</h3>
-            <ul class="space-y-3 text-gray-600 mb-8">
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Get secret messages with optional clues.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                    <span>Customize your link page with colors & themes.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span>Get "Nice Vibes" from our friendly AI ghost.</span>
-                </li>
-                <li class="flex items-center">
-                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg>
-                    <span>A cute, simple grid to see all your mail.</span>
-                </li>
-            </ul>
-            <h3 class="font-bold text-lg text-gray-800">What is LCA?</h3>
-            <p class="text-gray-600 text-sm mt-2 mb-4">
-                LCA is your personal, secret mailbox! Get the app, share your unique link, and let friends, classmates, or crushes send you anonymous messages. It's the most fun way to hear their real thoughts!
-            </p>
-            <h3 class="font-bold text-lg text-gray-800">Privacy & Safety</h3>
-            <p class="text-gray-600 text-sm mt-2">
-                We've got your back. All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional—senders only share what *they* want to.
-            </p>
-        </div>
-        <p class="text-gray-400 text-sm mt-8">
-            If you have a user link, please open it directly to send a message.
-        </p>
-    </div>
+    <div id="promoContainer" class="bg-white p-8 rounded-2xl shadow-lg max-w-md w-full text-center">
+        
+        <img src="econ.png" alt="LCA App Icon" class="w-32 h-32 rounded-3xl mx-auto shadow-lg mb-6" />
+        
+        <h1 class="text-3xl font-bold text-pink-500 mt-4 mb-2">LCA</h1>
+        <h2 class="text-xl font-medium text-gray-700 mb-4">LIFE CONFESS APPLICATION</h2>
+        <p class="text-lg text-gray-500 mb-8">Your anonymous mailbox awaits. 🤫</p>
+        
+        <div class="space-y-4">
+            <a href="https://expo.dev/artifacts/eas/faxtjgig89ZmSvhfgZ2Kfx.apk" class="block w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 hover:bg-green-700">
+                Download LCA App (.apk)
+            </a>
+        </div>
+        
+        <div class="text-left mt-8">
+            <h3 class="font-bold text-lg text-gray-800 mb-4">What's inside?</h3>
+            <ul class="space-y-3 text-gray-600 mb-8">
+                <li class="flex items-center">
+                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>Get secret messages with optional clues.</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    <span>Customize your link page with colors & themes.</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>Get "Nice Vibes" from our friendly AI ghost.</span>
+                </li>
+                <li class="flex items-center">
+                    <svg class="w-5 h-5 text-pink-500 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6z"></path></svg>
+                    <span>A cute, simple grid to see all your mail.</span>
+                </li>
+            </ul>
 
-    <!-- This is the popup message box -->
-    <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
-        <p id="messageBoxText" class="font-medium text-center"></p>
-    </div>
-    
-    <!-- This is the popup modal after sending -->
-    <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50">
-        <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full text-center">
-            <img src="econ.png" alt="LCA App Icon" class="w-24 h-24 rounded-2xl mx-auto shadow-lg mb-4 -mt-16 border-4 border-white" />
-            <h3 class="text-2xl font-bold text-pink-500 mb-2">Message Sent! 💌</h3>
-            <p id="receiptMessage" class="text-gray-500 mb-4 bg-gray-50 p-3 rounded-lg border border-gray-200 text-sm"></p>
-            <p class="text-gray-600 mb-6">Want to get messages like this? Download the LCA app!</p>
-            <button id="adDownloadButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 mb-2 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2">
-                Download the App
-            </button>
-            <button id="copyUserLinkButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md bg-blue-500 text-white transition duration-300 mb-2 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:ring-offset-2 flex items-center justify-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M8 5a1 1 0 011-1h1V3a1 1 0 112 0v1h1a1 1 0 110 2H9a1 1 0 01-1-1z" />
-                    <path fill-rule="evenodd" d="M5 3a2 2 0 012-2h6a2 2 0 012 2v1h-1V3a1 1 0 00-1-1H7a1 1 0 00-1 1v1H5V3zm5 4a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h8a1 1 0 001-1V7a1 1 0 00-1-1h-1zM6 9a1 1 0 100 2h6a1 1 0 100-2H6zm0 3a1 1 0 100 2h6a1 1 0 100-2H6z" clip-rule="evenodd" />
-                </svg>
-                Copy User's Link
-            </button>
-            <button id="adCloseButton" class="w-full font-bold py-2 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 mt-2">
-                Close
-            </button>
-        </div>
-    </div>
+            <h3 class="font-bold text-lg text-gray-800">What is LCA?</h3>
+            <p class="text-gray-600 text-sm mt-2 mb-4">
+                LCA is your personal, secret mailbox! Get the app, share your unique link, and let friends, classmates, or crushes send you anonymous messages. It's the most fun way to hear their real thoughts!
+            </p>
+            
+            <h3 class="font-bold text-lg text-gray-800">Privacy & Safety</h3>
+            <p class="text-gray-600 text-sm mt-2">
+                We've got your back. All messages are 100% anonymous. We don't save any personal data from the people sending you mail. The "clue" feature is totally optional—senders only share what *they* want to.
+            </p>
+        </div>
+        
+        <p class="text-gray-400 text-sm mt-8">
+            If you have a user link, please open it directly to send a message.
+        </p>
+    </div>
 
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-    <!-- Crypto JS for hashing -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-    <!-- NEW: Linked JavaScript -->
-    <script src="main.js" defer></script>
+    <div id="messageBox" class="hidden fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50">
+        <p id="messageBoxText" class="font-medium text-center"></p>
+    </div>
+    
+    <div id="adModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white p-6 rounded-2xl shadow-lg max-w-sm w-full text-center">
+            <img src="econ.png" alt="LCA App Icon" class="w-24 h-24 rounded-2xl mx-auto shadow-lg mb-4" />
+            <h3 class="text-2xl font-bold text-pink-500 mb-2">Message Sent! 💌</h3>
+            <p class="text-gray-600 mb-4">Remember the password you just created? Use it to check for a reply later!</p>
+            <p class="text-gray-600 mb-6">Want to get secret messages like this? Download the LCA app!</p>
+            <button id="adDownloadButton" class="w-full font-bold py-3 px-4 rounded-lg shadow-md bg-green-600 text-white transition duration-300 mb-2 hover:bg-green-700">
+                Download the App
+            </button>
+            <button id="adCloseButton" class="w-full font-bold py-3 px-4 rounded-lg text-gray-500 transition duration-300 hover:bg-gray-100">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const firebaseConfig = {
+              apiKey: "AIzaSyCzRIRSuwYKPdbdIrYFUV3Yuqyl0hcU0Fk",
+              authDomain: "confessapp-e1aff.firebaseapp.com",
+              projectId: "confessapp-e1aff",
+              storageBucket: "confessapp-e1aff.firebasestorage.app",
+              messagingSenderId: "1036012328977",
+              appId: "1:1036012328977:web:a9df29ebf930147fe979b0"
+            };
+
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            const aiQuestions = [
+                "What's a secret you've never told anyone? 🤫", "Do you have a crush on me?",
+                "What's your biggest 'what if' in life?", "What's the last lie you told?",
+                "What's a song that reminds you of me?", "What's your most embarrassing moment?",
+                "If you could time travel, where would you go?", "What's your honest opinion of me?",
+                "What's one thing you want to do before you die?", "Do I even know you in real life? 👀",
+                "What's a rumor you've heard about me?", "What's your biggest fear?",
+                "What do you think of my friends?", "Send me your favorite emoji.",
+                "Tell me something I don't know about you.", "Sino pinakacute sa batch natin?",
+                "May tinatago ka bang galit sakin? HAHA", "Ano ang first impression mo sakin?",
+                "Kung bibigyan mo ako ng advice, ano yun?", "Describe me in 3 words.",
+                "Ano ang pinakamalaking chismis na narinig mo lately? 😜", "May gusto ka bang aminin?",
+                "Anong pinaka-corny na joke ang alam mo?", "Saan mo gusto pumunta na tayong dalawa lang?",
+                "Rate my profile pic from 1-10."
+            ];
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+
+            const sendMailContainer = document.getElementById('sendMailContainer');
+            const checkReplyContainer = document.getElementById('checkReplyContainer');
+            const promoContainer = document.getElementById('promoContainer');
+            
+            const sendButton = document.getElementById('sendButton');
+            const aiButton = document.getElementById('aiButton');
+            const messageText = document.getElementById('messageText');
+            const clueText = document.getElementById('clueText');
+            const replyPassword = document.getElementById('replyPassword');
+            
+            const checkButton = document.getElementById('checkButton');
+            const checkPassword = document.getElementById('checkPassword');
+            const replyDisplay = document.getElementById('replyDisplay');
+            const replyText = document.getElementById('replyText');
+
+            const messageBox = document.getElementById('messageBox');
+            const messageBoxText = document.getElementById('messageBoxText');
+            
+            const letterHeader = document.getElementById('letterHeader');
+            const headerText = document.getElementById('headerText');
+            
+            const adModal = document.getElementById('adModal');
+            const adDownloadButton = document.getElementById('adDownloadButton');
+            const adCloseButton = document.getElementById('adCloseButton');
+            const showCheckReplyButton = document.getElementById('showCheckReplyButton');
+            const showSendMailButton = document.getElementById('showSendMailButton');
+
+            let currentHeaderText = 'tell me anything';
+            let currentHeaderColor = '#ffb3c6';
+            let currentTheme = 'default';
+
+            if (userId) {
+                promoContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
+                sendMailContainer.classList.remove('hidden');
+                
+                const linkRef = db.collection("publicLinks").doc(userId);
+                linkRef.get().then((doc) => {
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.linkHeaderText) {
+                            headerText.innerText = data.linkHeaderText;
+                            currentHeaderText = data.linkHeaderText;
+                        }
+                        if (data.linkHeaderColor) {
+                            letterHeader.style.backgroundColor = data.linkHeaderColor;
+                            currentHeaderColor = data.linkHeaderColor;
+                        }
+                        if (data.theme) {
+                            currentTheme = data.theme;
+                            if (data.theme === 'halloween') document.body.classList.add('theme-halloween');
+                            else if (data.theme === 'christmas') document.body.classList.add('theme-christmas');
+                        }
+                    } else { console.log("No custom link settings found."); }
+                }).catch((error) => { console.error("Error getting link settings:", error); });
+                
+            } else {
+                sendMailContainer.classList.add('hidden');
+                checkReplyContainer.classList.add('hidden');
+                promoContainer.classList.remove('hidden');
+            }
+
+            aiButton.onclick = () => {
+                const randomQuestion = aiQuestions[Math.floor(Math.random() * aiQuestions.length)];
+                messageText.value = randomQuestion;
+                messageText.focus();
+            };
+
+            sendButton.onclick = async () => {
+                if (!userId) {
+                    showMessage("ERROR: No user ID found in the link.", "error");
+                    return;
+                }
+                const text = messageText.value.trim();
+                const clue = clueText.value.trim();
+                const password = replyPassword.value.trim();
+
+                if (text === "") {
+                    showMessage("You can't send an empty message.", "error");
+                    return;
+                }
+                if (password === "") {
+                    showMessage("You must create a password to check for replies.", "error");
+                    return;
+                }
+                
+                const replyId = CryptoJS.SHA256(password + userId).toString();
+
+                sendButton.disabled = true;
+                sendButton.innerText = "Sending...";
+                
+                try {
+                    const messagesRef = db.collection("users").doc(userId).collection("messages");
+                    let payload = {
+                        text: text, createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        read: false, hasClue: false, fromAi: false, 
+                        headerText: currentHeaderText, headerColor: currentHeaderColor, theme: currentTheme,
+                        replyId: replyId
+                    };
+                    if (clue !== "") {
+                        payload.hasClue = true;
+                        payload.clueText = clue;
+                    }
+                    await messagesRef.add(payload);
+                    
+                    adModal.classList.remove('hidden');
+                    messageText.value = "";
+                    clueText.value = "";
+                    replyPassword.value = "";
+
+                } catch (error) {
+                    console.error("Error sending message: ", error);
+                    showMessage("An error occurred. Please try again.", "error");
+                } finally {
+                    sendButton.disabled = false;
+                    sendButton.innerText = "Send Mail";
+                }
+            };
+            
+            checkButton.onclick = async () => {
+                const password = checkPassword.value.trim();
+                if (password === "") {
+                    showMessage("Please enter your secret password.", "error");
+                    return;
+                }
+                
+                let checkingUserId = userId;
+                if (!checkingUserId) {
+                    const params = new URLSearchParams(window.location.search);
+                    checkingUserId = params.get('id');
+                    if(!checkingUserId) {
+                        showMessage("Error: No user link found.", "error");
+                        return;
+                    }
+                }
+                
+                const replyId = CryptoJS.SHA256(password + checkingUserId).toString();
+                
+                checkButton.disabled = true;
+                checkButton.innerText = "Checking...";
+                
+                try {
+                    const replyRef = db.collection("replies").doc(replyId);
+                    const doc = await replyRef.get();
+                    
+                    if (doc.exists) {
+                        const data = doc.data();
+                        if (data.toUserId === checkingUserId) {
+                            replyText.innerText = data.replyText;
+                            replyDisplay.classList.remove('hidden');
+                            showMessage("Reply found!", "success");
+                        } else {
+                            showMessage("Password not found for this user.", "error");
+                        }
+                    } else {
+                        showMessage("No reply yet, or password was wrong.", "error");
+                    }
+                } catch (e) {
+                    console.error("Error checking reply:", e);
+                    showMessage("An error occurred.", "error");
+                } finally {
+                    checkButton.disabled = false;
+                    checkButton.innerText = "Check Mailbox";
+                }
+            };
+
+            showCheckReplyButton.onclick = () => {
+                sendMailContainer.classList.add('hidden');
+                checkReplyContainer.classList.remove('hidden');
+            };
+            showSendMailButton.onclick = () => {
+                checkReplyContainer.classList.add('hidden');
+                sendMailContainer.classList.remove('hidden');
+            };
+            adCloseButton.onclick = () => {
+                adModal.classList.add('hidden');
+            };
+            adDownloadButton.onclick = () => {
+                window.location.href = 'https://expo.dev/artifacts/eas/faxtjgig89ZmSvhfgZ2Kfx.apk';
+            };
+
+            function showMessage(text, type) {
+                messageBoxText.innerText = text;
+                if (type === "success") {
+                    messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-green-100 text-green-800";
+                } else {
+                    messageBox.className = "fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 bg-red-100 text-red-800";
+                }
+                messageBox.classList.remove('hidden');
+                setTimeout(() => {
+                    messageBox.classList.add('hidden');
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 </html>
