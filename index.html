@@ -7,12 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- ADDING THE EVENT FONTS BACK -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Creepster&family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
     
     <style>
+        /* --- 1. DEFAULT STYLES --- */
         body { 
             font-family: 'Inter', sans-serif; 
             background-color: #FFF7F9;
+            transition: background-color 0.3s ease;
+            user-select: none;
         }
         #sendMailContainer, #checkReplyContainer {
             position: relative;
@@ -21,26 +25,194 @@
             background-color: #fff; border: none; width: 100%;
             padding: 1rem; line-height: 1.6; font-size: 16px; color: #4a4a4a;
             font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s ease;
         }
         .form-input:focus { box-shadow: none; outline: none; }
         .clue-input {
              background-color: #f8f7ff; border: 1px solid #e6e6e6;
              font-family: 'Inter', sans-serif;
+             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
         .clue-input:focus {
             border-color: #ff77a9; box-shadow: 0 0 0 2px #ffb3c6; outline: none;
         }
         .btn-primary {
             background-color: #ff77a9; color: white;
+            transition: background-color 0.3s ease;
         }
+        .btn-primary:hover { background-color: #ff69b4; }
         .btn-secondary {
             background-color: #e6e6e6; color: #4a4a4a;
+            transition: background-color 0.3s ease;
         }
+        .btn-secondary:hover { background-color: #dcdcdc; }
         .watermark {
             position: absolute; bottom: 10px; right: 15px; font-size: 1.5rem;
             font-weight: bold; color: #e6e6e6; opacity: 0.5;
             transform: rotate(-15deg); pointer-events: none;
         }
+        .send-animation {
+            position: absolute; bottom: 70px; left: 50%; font-size: 3rem;
+            animation: float-up 2s ease-out forwards;
+            pointer-events: none; z-index: 100;
+        }
+        @keyframes float-up {
+            0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+            100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
+        }
+
+        /* --- 2. EVENT THEMES (4 Events) --- */
+        .event-halloween {
+            background-color: #2d1142;
+            font-family: 'Creepster', cursive;
+            background-image: linear-gradient(rgba(0,0,0,0.2) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.2) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+        .event-halloween #sendMailContainer { border: 2px solid #f38323; }
+        .event-halloween #sendMailContainer::before {
+            content: '👻';
+            position: absolute; top: -20px; left: -25px;
+            font-size: 3rem; transform: rotate(-20deg); opacity: 0.9; z-index: 10;
+        }
+        .event-halloween #letterHeader { background-color: #f38323; }
+        .event-halloween #headerText { font-size: 2rem; letter-spacing: 2px; text-shadow: 2px 2px 4px #000; }
+        .event-halloween .form-input, .event-halloween .clue-input { 
+            font-family: 'Creepster', cursive;
+            background-color: #1a1a1a; color: #ffab73;
+            border: 1px solid #f38323; font-size: 1.1rem;
+        }
+        .event-halloween .form-input::placeholder, .event-halloween .clue-input::placeholder { color: #b37a50; }
+        .event-halloween .clue-input:focus { border-color: #f38323; box-shadow: 0 0 0 3px #ffab73; }
+        .event-halloween .btn-primary { background-color: #f38323; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-primary:hover { background-color: #d46f1a; }
+        .event-halloween .btn-secondary { background-color: #444; color: #ddd; text-shadow: 1px 1px 2px #000; font-size: 1.2rem; }
+        .event-halloween .btn-secondary:hover { background-color: #666; }
+        .event-halloween .watermark { color: #444; opacity: 0.2; }
+
+        .event-christmas {
+            background-color: #f0f7f4;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+        .event-christmas #sendMailContainer { border: 2px solid #0c8346; }
+        .event-christmas #sendMailContainer::before {
+            content: '🎄';
+            position: absolute; top: -20px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
+        }
+        .event-christmas #letterHeader { background-color: #c41d34; }
+        .event-christmas #headerText { font-size: 2.2rem; text-shadow: 1px 1px 2px #000; }
+        .event-christmas .form-input, .event-christmas .clue-input {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.25rem; background-color: #fff; color: #2b2b2b; border-color: #d4e9e2;
+        }
+        .event-christmas .clue-input:focus { border-color: #0c8346; box-shadow: 0 0 0 2px #a2d9c0; }
+        .event-christmas .btn-primary { background-color: #0c8346; }
+        .event-christmas .btn-primary:hover { background-color: #0a6b38; }
+        .event-christmas .btn-secondary { background-color: #e6e6e6; color: #4a4a4a; }
+        .event-christmas .btn-secondary:hover { background-color: #dcdcdc; }
+        .event-christmas .watermark { color: #d4e9e2; }
+
+        .event-valentines { background-color: #fff1f2; }
+        .event-valentines #sendMailContainer { border: 2px solid #e11d48; }
+        .event-valentines #sendMailContainer::before {
+            content: '💘';
+            position: absolute; top: -20px; left: -20px;
+            font-size: 3rem; transform: rotate(-25deg); opacity: 0.9; z-index: 10;
+        }
+        .event-valentines #letterHeader { background-color: #e11d48; }
+        .event-valentines #headerText { font-size: 2rem; font-family: 'serif'; font-style: italic; }
+        .event-valentines .form-input, .event-valentines .clue-input {
+            font-family: 'serif'; font-style: italic;
+            font-size: 1.1rem; background-color: #fff; color: #be123c; border-color: #fbcfe8;
+        }
+        .event-valentines .clue-input:focus { border-color: #e11d48; box-shadow: 0 0 0 2px #fbcfe8; }
+        .event-valentines .btn-primary { background-color: #e11d48; }
+        .event-valentines .btn-primary:hover { background-color: #be123c; }
+        .event-valentines .btn-secondary { background-color: #fce7f3; color: #be123c; }
+        .event-valentines .btn-secondary:hover { background-color: #fbcfe8; }
+        .event-valentines .watermark { color: #fce7f3; }
+
+        .event-newyear { background-color: #030712; }
+        .event-newyear #sendMailContainer { border: 2px solid #f1f5f9; }
+        .event-newyear #sendMailContainer::before {
+            content: '🎆';
+            position: absolute; top: -15px; right: -15px;
+            font-size: 3rem; transform: rotate(15deg); opacity: 0.9; z-index: 10;
+        }
+        .event-newyear #letterHeader { background-color: #111827; }
+        .event-newyear #headerText { font-size: 2rem; text-shadow: 1px 1px 10px #fff; }
+        .event-newyear .form-input, .event-newyear .clue-input {
+            font-family: 'serif'; font-weight: bold;
+            font-size: 1.1rem; background-color: #1f2937; color: #f1f5f9; border-color: #374151;
+        }
+        .event-newyear .clue-input:focus { border-color: #f1f5f9; box-shadow: 0 0 0 2px #4b5563; }
+        .event-newyear .btn-primary { background-color: #f1f5f9; color: #111827; }
+        .event-newyear .btn-primary:hover { background-color: #e5e7eb; }
+        .event-newyear .btn-secondary { background-color: #374151; color: #e5e7eb; }
+        .event-newyear .btn-secondary:hover { background-color: #4b5563; }
+        .event-newyear .watermark { color: #374151; }
+
+        /* --- 3. PURCHASABLE THEMES (4 Themes) --- */
+        .theme-ocean { background-color: #030e21; }
+        .theme-ocean #sendMailContainer { border: 2px solid #0a4f70; }
+        .theme-ocean #letterHeader { background-color: #0a4f70; }
+        .theme-ocean .form-input, .theme-ocean .clue-input {
+            font-family: 'monospace';
+            font-size: 1rem; background-color: #0a192f; color: #ccd6f6; border-color: #0a4f70;
+        }
+        .theme-ocean .clue-input:focus { border-color: #a1c4fd; box-shadow: 0 0 0 2px #0a192f; }
+        .theme-ocean .btn-primary { background-color: #a1c4fd; color: #0a192f; }
+        .theme-ocean .btn-primary:hover { background-color: #89acdd; }
+        .theme-ocean .btn-secondary { background-color: #0a192f; color: #a1c4fd; }
+        .theme-ocean .btn-secondary:hover { background-color: #0f2b5c; }
+        .theme-ocean .watermark { color: #0a192f; }
+
+        .theme-cherry { background-color: #fffafa; }
+        .theme-cherry #sendMailContainer { border: 2px solid #f78da7; }
+        .theme-cherry #letterHeader { background-color: #f78da7; }
+        .theme-cherry #headerText { font-family: 'serif'; }
+        .theme-cherry .form-input, .theme-cherry .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #fff0f5; color: #5c333f; border-color: #f7d8e2;
+        }
+        .theme-cherry .clue-input:focus { border-color: #f78da7; box-shadow: 0 0 0 2px #fce6ec; }
+        .theme-cherry .btn-primary { background-color: #f78da7; }
+        .theme-cherry .btn-primary:hover { background-color: #f57092; }
+        .theme-cherry .btn-secondary { background-color: #fef0f4; color: #f57092; }
+        .theme-cherry .btn-secondary:hover { background-color: #fce6ec; }
+        .theme-cherry .watermark { color: #fce6ec; }
+
+        .theme-gamer { background-color: #000; }
+        .theme-gamer #sendMailContainer { border: 2px solid #581c87; }
+        .theme-gamer #letterHeader { background-color: #581c87; }
+        .theme-gamer #headerText { text-shadow: 1px 1px 5px #00ff00; }
+        .theme-gamer .form-input, .theme-gamer .clue-input {
+            font-family: 'monospace'; font-size: 1rem;
+            background-color: #1a1a1a; color: #00ff00; border-color: #3a105c;
+            text-shadow: 0 0 5px #00ff00;
+        }
+        .theme-gamer .form-input::placeholder, .theme-gamer .clue-input::placeholder { color: #008000; }
+        .theme-gamer .clue-input:focus { border-color: #00ff00; box-shadow: 0 0 0 2px #581c87; }
+        .theme-gamer .btn-primary { background-color: #00ff00; color: #000; }
+        .theme-gamer .btn-primary:hover { background-color: #00cc00; }
+        .theme-gamer .btn-secondary { background-color: #1a1a1a; color: #00ff00; }
+        .theme-gamer .btn-secondary:hover { background-color: #2a2a2a; }
+        .theme-gamer .watermark { color: #1a1a1a; }
+
+        .theme-gold { background-color: #0c0c0c; }
+        .theme-gold #sendMailContainer { border: 2px solid #d4af37; }
+        .theme-gold #letterHeader { background-color: #d4af37; }
+        .theme-gold #headerText { color: #000; font-family: 'serif'; font-weight: bold; }
+        .theme-gold .form-input, .theme-gold .clue-input {
+            font-family: 'serif'; font-size: 1.1rem;
+            background-color: #111111; color: #ffd700; border-color: #222;
+        }
+        .theme-gold .clue-input:focus { border-color: #d4af37; box-shadow: 0 0 0 2px #222; }
+        .theme-gold .btn-primary { background-color: #d4af37; color: #000; }
+        .theme-gold .btn-primary:hover { background-color: #b89b30; }
+        .theme-gold .btn-secondary { background-color: #222; color: #d4af37; }
+        .theme-gold .btn-secondary:hover { background-color: #333; }
+        .theme-gold .watermark { color: #222; }
     </style>
 </head>
 <body class="flex items-center justify-center min-h-screen p-4">
@@ -139,7 +311,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 
-    <!-- NEW, SIMPLE, WORKING SCRIPT -->
+    <!-- THE NEW, FULLY WORKING SCRIPT -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const firebaseConfig = {
@@ -204,9 +376,6 @@
             const receiptMessage = document.getElementById('receiptMessage');
             const copyUserLinkButton = document.getElementById('copyUserLinkButton');
             
-            // --- THIS IS THE ONLY LOGIC WE NEED FOR NOW ---
-            // --- IT IS YOUR ORIGINAL, WORKING LOGIC ---
-            
             let currentHeaderText = 'tell me anything';
             let currentHeaderColor = '#ffb3c6';
             let currentTheme = 'default';
@@ -217,38 +386,74 @@
                 checkReplyContainer.classList.add('hidden');
                 
                 const linkRef = db.collection("publicLinks").doc(userId);
-                
-                linkRef.get().then((doc) => {
-                    if (doc.exists) {
-                        const data = doc.data();
+                const eventRef = db.collection("globalConfig").doc("events");
+
+                Promise.all([linkRef.get(), eventRef.get()])
+                    .then(([linkDoc, eventDoc]) => {
                         
-                        if (data.linkHeaderText) {
-                            headerText.innerText = data.linkHeaderText;
-                            currentHeaderText = data.linkHeaderText;
+                        let userTheme = 'default';
+                        let userHeader = 'tell me anything';
+                        let userColor = '#ffb3c6';
+                        if (linkDoc.exists) {
+                            const data = linkDoc.data();
+                            userTheme = data.theme || 'default';
+                            userHeader = data.linkHeaderText || 'tell me anything';
+                            userColor = data.linkHeaderColor || '#ffb3c6';
+                        }
+
+                        let activeEvent = null;
+                        if (eventDoc.exists()) {
+                            const events = eventDoc.data();
+                            if (events.valentines) activeEvent = 'event_valentines';
+                            else if (events.newyear) activeEvent = 'event_newyear';
+                            else if (events.christmas) activeEvent = 'event_christmas';
+                            else if (events.halloween) activeEvent = 'event_halloween';
+                        }
+
+                        // THIS IS THE FIXED LOGIC
+                        currentTheme = activeEvent || userTheme;
+
+                        if (currentTheme === 'default') {
+                            currentHeaderText = userHeader;
+                            currentHeaderColor = userColor;
+                        } else if (currentTheme.startsWith('event_')) {
+                            // Event is active. It overrides everything.
+                            const eventDetails = {
+                                event_halloween: { text: 'SPOOKY TIME 👻', color: '#f38323' },
+                                event_christmas: { text: 'MERRY MESSAGES 🎄', color: '#c41d34' },
+                                event_newyear: { text: 'HAPPY NEW YEAR 🎆', color: '#111827' },
+                                event_valentines: { text: 'BE MINE? ❤️', color: '#e11d48' }
+                            };
+                            currentHeaderText = eventDetails[currentTheme].text;
+                            currentHeaderColor = eventDetails[currentTheme].color;
+                        } else if (currentTheme.startsWith('theme_')) {
+                            // User has a custom theme. Use their saved text and color.
+                            currentHeaderText = userHeader;
+                            currentHeaderColor = userColor;
                         }
                         
-                        if (data.linkHeaderColor) {
-                            letterHeader.style.backgroundColor = data.linkHeaderColor;
-                            currentHeaderColor = data.linkHeaderColor;
+                        // Apply to the page
+                        headerText.innerText = currentHeaderText;
+                        letterHeader.style.backgroundColor = currentHeaderColor;
+                        
+                        // Apply the theme class to the body
+                        document.body.classList.remove(
+                            'event-halloween', 'event-christmas', 'event-newyear', 'event-valentines',
+                            'theme-ocean', 'theme-cherry', 'theme-gamer', 'theme-gold'
+                        );
+                        if (currentTheme !== 'default') {
+                            document.body.classList.add(currentTheme.replace('_', '-'));
                         }
-                        
-                        // We will add the themes back here LATER
-                        // For now, we only care about text and color
-                        
-                    } else { 
-                        console.log("No custom link settings found."); 
-                    }
-                }).catch((error) => { 
-                    console.error("Error getting link settings:", error); 
-                });
+                    })
+                    .catch((error) => {
+                        console.error("Error getting settings:", error);
+                    });
                 
             } else {
                 promoContainer.classList.remove('hidden');
                 sendMailContainer.classList.add('hidden');
                 checkReplyContainer.classList.add('hidden');
             }
-
-            // --- ALL OTHER CODE IS YOUR WORKING, ORIGINAL CODE ---
 
             aiButton.onclick = () => {
                 aiButton.disabled = true;
@@ -302,7 +507,7 @@
                         read: false, hasClue: false, fromAi: false, 
                         headerText: currentHeaderText, 
                         headerColor: currentHeaderColor, 
-                        theme: 'default', // We'll update this later
+                        theme: currentTheme, // Save the theme that was active
                         replyId: replyId
                     };
                     if (clue !== "") {
